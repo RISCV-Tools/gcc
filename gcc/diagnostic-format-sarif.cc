@@ -2292,9 +2292,11 @@ sarif_builder::make_location_object (sarif_location_manager &loc_mgr,
   set_any_logical_locs_arr (*location_obj, logical_loc);
 
   /* "message" property (SARIF v2.1.0 section 3.28.5).  */
-  label_text ev_desc = event.get_desc (false);
-  location_obj->set<sarif_message> ("message",
-				    make_message_object (ev_desc.get ()));
+  std::unique_ptr<pretty_printer> pp = get_printer ()->clone ();
+  event.print_desc (*pp);
+  location_obj->set<sarif_message>
+    ("message",
+     make_message_object (pp_formatted_text (pp.get ())));
 
   add_any_include_chain (loc_mgr, *location_obj.get (), loc);
 
@@ -3409,9 +3411,10 @@ public:
     diagnostic_output_format::dump (out, indent);
   }
 
-  diagnostic_per_format_buffer *make_per_format_buffer () final override
+  std::unique_ptr<diagnostic_per_format_buffer>
+  make_per_format_buffer () final override
   {
-    return new diagnostic_sarif_format_buffer (m_builder);
+    return ::make_unique<diagnostic_sarif_format_buffer> (m_builder);
   }
   void set_buffer (diagnostic_per_format_buffer *base_buffer) final override
   {
@@ -3657,7 +3660,7 @@ diagnostic_output_format_init_sarif (diagnostic_context &context,
 
   context.m_printer->set_token_printer
     (&fmt->get_builder ().get_token_printer ());
-  context.set_output_format (fmt.release ());
+  context.set_output_format (std::move (fmt));
 }
 
 /* Populate CONTEXT in preparation for SARIF output to stderr.  */
@@ -4255,7 +4258,7 @@ test_message_with_embedded_link (enum sarif_version version)
     };
 
     test_sarif_diagnostic_context dc ("test.c", version);
-    dc.set_urlifier (new test_urlifier ());
+    dc.set_urlifier (::make_unique<test_urlifier> ());
     rich_location richloc (line_table, UNKNOWN_LOCATION);
     dc.report (DK_ERROR, richloc, nullptr, 0,
 	       "foo %<-foption%> %<unrecognized%> bar");

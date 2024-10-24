@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with GCC; see the file COPYING3.  If not see
 <http://www.gnu.org/licenses/>.  */
 
+#define INCLUDE_MEMORY
 #include "config.h"
 #include "system.h"
 #include "coretypes.h"
@@ -2328,7 +2329,7 @@ is_rshift_by_1 (gassign *stmt)
   if (gimple_assign_rhs_code (stmt) == RSHIFT_EXPR
       && integer_onep (gimple_assign_rhs2 (stmt)))
     return true;
-  if (gimple_assign_rhs_code (stmt) == TRUNC_DIV_EXPR
+  if (trunc_or_exact_div_p (gimple_assign_rhs_code (stmt))
       && tree_fits_shwi_p (gimple_assign_rhs2 (stmt))
       && tree_to_shwi (gimple_assign_rhs2 (stmt)) == 2)
     return true;

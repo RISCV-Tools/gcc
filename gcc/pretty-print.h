@@ -21,6 +21,14 @@ along with GCC; see the file COPYING3.  If not see
 #ifndef GCC_PRETTY_PRINT_H
 #define GCC_PRETTY_PRINT_H
 
+/* This header uses std::unique_ptr, but <memory> can't be directly
+   included due to issues with macros.  Hence it must be included from
+   system.h by defining INCLUDE_MEMORY in any source file using it.  */
+
+#ifndef INCLUDE_MEMORY
+# error "You must define INCLUDE_MEMORY before including system.h to use pretty-print.h"
+#endif
+
 #include "obstack.h"
 #include "rich-location.h"
 #include "diagnostic-url.h"
@@ -269,7 +277,7 @@ public:
 
   virtual ~pretty_printer ();
 
-  virtual pretty_printer *clone () const;
+  virtual std::unique_ptr<pretty_printer> clone () const;
 
   void set_output_stream (FILE *outfile)
   {
@@ -578,6 +586,11 @@ extern void pp_separate_with (pretty_printer *, char);
 #endif
 extern void pp_printf (pretty_printer *, const char *, ...)
      ATTRIBUTE_GCC_PPDIAG(2,3);
+
+extern void pp_printf_n (pretty_printer *, unsigned HOST_WIDE_INT n,
+			 const char *, const char *, ...)
+     ATTRIBUTE_GCC_PPDIAG(3,5)
+     ATTRIBUTE_GCC_PPDIAG(4,5);
 
 extern void pp_verbatim (pretty_printer *, const char *, ...)
      ATTRIBUTE_GCC_PPDIAG(2,3);
