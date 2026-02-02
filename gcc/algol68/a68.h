@@ -338,6 +338,10 @@ void a68_extract_operators (NODE_T *p);
 void a68_extract_labels (NODE_T *p, int expect);
 void a68_extract_declarations (NODE_T *p);
 void a68_elaborate_bold_tags (NODE_T *p);
+void a68_extract_revelation (NODE_T *q, const char *module,
+			     const char *filename, TAG_T *tag = NO_TAG);
+void a68_extract_revelation (TABLE_T *t, LINE_T *l, const char *module,
+			     const char *filename, TAG_T *tag = NO_TAG);
 
 /* a68-parser-keywords.cc  */
 
@@ -583,30 +587,6 @@ tree a68_complex_re (tree z);
 tree a68_complex_im (tree z);
 tree a68_complex_conj (MOID_T *mode, tree z);
 tree a68_complex_widen_from_real (MOID_T *mode, tree r);
-
-/* a68-low-posix.cc  */
-
-tree a68_posix_argc (void);
-tree a68_posix_argv (void);
-tree a68_posix_getenv (void);
-tree a68_posix_putchar (void);
-tree a68_posix_puts (void);
-tree a68_posix_fconnect (void);
-tree a68_posix_fcreate (void);
-tree a68_posix_fopen (void);
-tree a68_posix_fclose (void);
-tree a68_posix_fsize (void);
-tree a68_posix_lseek (void);
-tree a68_posix_errno (void);
-tree a68_posix_exit (void);
-tree a68_posix_perror (void);
-tree a68_posix_strerror (void);
-tree a68_posix_getchar (void);
-tree a68_posix_fgetc (void);
-tree a68_posix_fputc (void);
-tree a68_posix_fputs (void);
-tree a68_posix_gets (void);
-tree a68_posix_fgets (void);
 
 /* a68-low-reals.cc  */
 
@@ -1085,38 +1065,6 @@ tree a68_lower_longlongrandom (NODE_T *p, LOW_CTX_T ctx);
 tree a68_lower_set3 (NODE_T *p, LOW_CTX_T ctx);
 tree a68_lower_clear3 (NODE_T *p, LOW_CTX_T ctx);
 tree a68_lower_test3 (NODE_T *p, LOW_CTX_T ctx);
-tree a68_lower_posixargc (NODE_T *p, LOW_CTX_T ctx);
-tree a68_lower_posixargv (NODE_T *p, LOW_CTX_T ctx);
-tree a68_lower_posixputchar (NODE_T *p, LOW_CTX_T ctx);
-tree a68_lower_posixputs (NODE_T *p, LOW_CTX_T ctx);
-tree a68_lower_posixfputc (NODE_T *p, LOW_CTX_T ctx);
-tree a68_lower_posixfputs (NODE_T *p, LOW_CTX_T ctx);
-tree a68_lower_posixgetenv (NODE_T *p, LOW_CTX_T ctx);
-tree a68_lower_posixfconnect (NODE_T *p, LOW_CTX_T ctx);
-tree a68_lower_posixfopen (NODE_T *p, LOW_CTX_T ctx);
-tree a68_lower_posixfcreate (NODE_T *p, LOW_CTX_T ctx);
-tree a68_lower_posixfclose (NODE_T *p, LOW_CTX_T ctx);
-tree a68_lower_posixfsize (NODE_T *p, LOW_CTX_T ctx);
-tree a68_lower_posixlseek (NODE_T *p, LOW_CTX_T ctx);
-tree a68_lower_posixseekcur (NODE_T *p, LOW_CTX_T ctx);
-tree a68_lower_posixseekend (NODE_T *p, LOW_CTX_T ctx);
-tree a68_lower_posixseekset (NODE_T *p, LOW_CTX_T ctx);
-tree a68_lower_posixstdinfiledes (NODE_T *p, LOW_CTX_T ctx);
-tree a68_lower_posixstdoutfiledes (NODE_T *p, LOW_CTX_T ctx);
-tree a68_lower_posixstderrfiledes (NODE_T *p, LOW_CTX_T ctx);
-tree a68_lower_posixfileodefault (NODE_T *p, LOW_CTX_T ctx);
-tree a68_lower_posixfileordwr (NODE_T *p, LOW_CTX_T ctx);
-tree a68_lower_posixfileordonly (NODE_T *p, LOW_CTX_T ctx);
-tree a68_lower_posixfileowronly (NODE_T *p, LOW_CTX_T ctx);
-tree a68_lower_posixfileotrunc (NODE_T *p, LOW_CTX_T ctx);
-tree a68_lower_posixerrno (NODE_T *p, LOW_CTX_T ctx);
-tree a68_lower_posixexit (NODE_T *p, LOW_CTX_T ctx);
-tree a68_lower_posixperror (NODE_T *p, LOW_CTX_T ctx);
-tree a68_lower_posixstrerror (NODE_T *p, LOW_CTX_T ctx);
-tree a68_lower_posixgetchar (NODE_T *p, LOW_CTX_T ctx);
-tree a68_lower_posixfgetc (NODE_T *p, LOW_CTX_T ctx);
-tree a68_lower_posixgets (NODE_T *p, LOW_CTX_T ctx);
-tree a68_lower_posixfgets (NODE_T *p, LOW_CTX_T ctx);
 
 /* a68-exports.cc  */
 
@@ -1126,7 +1074,7 @@ void a68_do_exports (NODE_T *p);
 
 /* a68-imports.cc  */
 
-MOIF_T *a68_open_packet (const char *module);
+MOIF_T *a68_open_packet (const char *module, const char *filename = NULL);
 bool a68_process_module_map (const char *map, const char **errmsg);
 char *a68_find_object_export_data (const std::string &filename,
 				   int fd, off_t offset, size_t *size);

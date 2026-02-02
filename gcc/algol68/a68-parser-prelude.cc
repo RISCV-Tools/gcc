@@ -22,6 +22,7 @@
 #include "config.h"
 #include "system.h"
 #include "coretypes.h"
+#include "options.h"
 
 #include "a68.h"
 
@@ -1305,6 +1306,22 @@ stand_prelude (void)
   m = a68_proc (M_VOID, M_SEMA, NO_MOID);
   a68_op (A68_STD, "UP", m);
   a68_op (A68_STD, "DOWN", m);
+
+
+  /* Load Algol 68 parts.  */
+  if (!flag_building_libga68)
+    a68_extract_revelation (A68_STANDENV, LINE (INFO (TOP_NODE (&A68_JOB))),
+			    "STANDARD", "ga68");
+}
+
+/* Transput.  */
+
+static void
+stand_transput (void)
+{
+  //  if (!flag_building_libga68)
+  //    a68_extract_revelation (A68_STANDENV, LINE (INFO (TOP_NODE (&A68_JOB))),
+  //                            "TRANSPUT", "ga68");
 }
 
 /* GNU extensions for the standenv.  */
@@ -1404,82 +1421,10 @@ gnu_prelude (void)
 static void
 posix_prelude (void)
 {
-  MOID_T *m = NO_MOID;
-
-  /* Environment variables.  */
-  m = a68_proc (M_STRING, M_STRING, NO_MOID);
-  a68_idf (A68_EXT, "getenv", m, a68_lower_posixgetenv);
-  /* Exit status handling.  */
-  m = a68_proc (M_VOID, M_INT, NO_MOID);
-  a68_idf (A68_EXT, "posixexit", m, a68_lower_posixexit);
-  /* Argument handling.  */
-  m = A68_MCACHE (proc_int);
-  a68_idf (A68_EXT, "argc", m, a68_lower_posixargc);
-  m = a68_proc (M_STRING, M_INT, NO_MOID);
-  a68_idf (A68_EXT, "argv", m, a68_lower_posixargv);
-  /* Error procedures.  */
-  m = A68_MCACHE (proc_int);
-  a68_idf (A68_EXT, "errno", m, a68_lower_posixerrno);
-  m = a68_proc (M_VOID, M_STRING, NO_MOID);
-  a68_idf (A68_EXT, "perror", m, a68_lower_posixperror);
-  m = a68_proc (M_STRING, M_INT, NO_MOID);
-  a68_idf (A68_EXT, "strerror", m, a68_lower_posixstrerror);
-  /* I/O identifiers.  */
-  a68_idf (A68_EXT, "stdin", M_INT, a68_lower_posixstdinfiledes);
-  a68_idf (A68_EXT, "stdout", M_INT, a68_lower_posixstdoutfiledes);
-  a68_idf (A68_EXT, "stderr", M_INT, a68_lower_posixstderrfiledes);
-  a68_idf (A68_EXT, "fileodefault", M_BITS, a68_lower_posixfileodefault);
-  a68_idf (A68_EXT, "fileordwr", M_BITS, a68_lower_posixfileordwr);
-  a68_idf (A68_EXT, "fileordonly", M_BITS, a68_lower_posixfileordonly);
-  a68_idf (A68_EXT, "fileowronly", M_BITS, a68_lower_posixfileowronly);
-  a68_idf (A68_EXT, "fileotrunc", M_BITS, a68_lower_posixfileotrunc);
-  /* Opening and closing files.  */
-  m = a68_proc (M_INT, M_STRING, M_BITS, NO_MOID);
-  a68_idf (A68_EXT, "fopen", m, a68_lower_posixfopen);
-  a68_idf (A68_EXT, "fcreate", m, a68_lower_posixfcreate);
-  m = A68_MCACHE (proc_int_int);
-  a68_idf (A68_EXT, "fclose", m, a68_lower_posixfclose);
-  /* Getting properties of files.  */
-  m = a68_proc (M_LONG_LONG_INT, M_INT, NO_MOID);
-  a68_idf (A68_EXT, "fsize", m, a68_lower_posixfsize);
-  m = a68_proc (M_LONG_LONG_INT, M_INT, M_LONG_LONG_INT, M_INT, NO_MOID);
-  a68_idf (A68_EXT, "lseek", m, a68_lower_posixlseek);
-  a68_idf (A68_EXT, "seekcur", M_INT, a68_lower_posixseekcur);
-  a68_idf (A68_EXT, "seekend", M_INT, a68_lower_posixseekend);
-  a68_idf (A68_EXT, "seekset", M_INT, a68_lower_posixseekset);
-  /* Sockets.  */
-  m = a68_proc (M_INT, M_STRING, M_INT, NO_MOID);
-  a68_idf (A68_EXT, "fconnect", m, a68_lower_posixfconnect);
-  /* String and character output.  */
-  m = a68_proc (M_CHAR, M_CHAR, NO_MOID);
-  a68_idf (A68_EXT, "putchar", m, a68_lower_posixputchar);
-  m = a68_proc (M_VOID, M_STRING, NO_MOID);
-  a68_idf (A68_EXT, "puts", m, a68_lower_posixputs);
-  m = a68_proc (M_CHAR, M_INT, M_CHAR, NO_MOID);
-  a68_idf (A68_EXT, "fputc", m, a68_lower_posixfputc);
-  m = a68_proc (M_INT, M_INT, M_STRING, NO_MOID);
-  a68_idf (A68_EXT, "fputs", m, a68_lower_posixfputs);
-  /* String and character input.  */
-  m = A68_MCACHE (proc_char);
-  a68_idf (A68_EXT, "getchar", m, a68_lower_posixgetchar);
-  m = a68_proc (M_CHAR, M_INT, NO_MOID);
-  a68_idf (A68_EXT, "fgetc", m, a68_lower_posixfgetc);
-  m = a68_proc (M_REF_STRING, M_INT, NO_MOID);
-  a68_idf (A68_EXT, "gets", m, a68_lower_posixgets);
-  m = a68_proc (M_REF_STRING, M_INT, M_INT, NO_MOID);
-  a68_idf (A68_EXT, "fgets", m, a68_lower_posixfgets);
+  if (!flag_building_libga68)
+    a68_extract_revelation (A68_STANDENV, LINE (INFO (TOP_NODE (&A68_JOB))),
+			    "POSIX", "ga68");
 }
-
-/* Transput.  */
-
-static void
-stand_transput (void)
-{
-  /* Most of the standard transput is implemented in Algol 68 and doesn't
-     require compiler support.  See libga68/transput.a68.in */
-}
-
-/* Build the standard environ symbol table.  */
 
 void
 a68_make_standard_environ (void)

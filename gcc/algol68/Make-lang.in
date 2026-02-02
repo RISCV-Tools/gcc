@@ -105,7 +105,6 @@ ALGOL68_OBJS = algol68/a68-lang.o \
                algol68/a68-low-reals.o \
                algol68/a68-low-complex.o \
                algol68/a68-low-bits.o \
-               algol68/a68-low-posix.o \
                algol68/a68-low-prelude.o \
                algol68/a68-low-ranges.o \
                algol68/a68-low-runtime.o \

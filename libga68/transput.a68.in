@@ -1,4 +1,4 @@
-{ Process this file with sppp.awk  }
+{ Process this file with sppp.awk  -*- mode: a68 -*- }
 
 { transput.a68.in - Standard transput.
 

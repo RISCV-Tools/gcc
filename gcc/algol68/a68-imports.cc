@@ -1366,10 +1366,14 @@ a68_decode_moifs (const char *data, size_t size, const char **errstr)
 }
 
 /* Get a moif with the exports for module named MODULE.  If no exports can be
-   found then return NULL.  */
+   found then return NULL.
+
+   If BASENAME is not NULL then it specifies the basefile of the file to open
+   for the module exports: BASENAME.o, libBASENAME.so, etc.  If BASENAME is
+   NULL then the filename is derived from the module name.  */
 
 MOIF_T *
-a68_open_packet (const char *module)
+a68_open_packet (const char *module, const char *basename)
 {
   /* We may have a suitable moif already decoded for the requested module.  If
      so, use it.  */
@@ -1390,21 +1394,26 @@ a68_open_packet (const char *module)
   if (moif == NO_MOIF)
     {
       char *filename;
-      const char **pfilename = A68_MODULE_FILES->get (module);
-      if (pfilename == NULL)
-	{
-	  /* Turn the module indicant in MODULE to lower-case.  */
-	  filename = (char *) alloca (strlen (module) + 1);
-	  size_t i = 0;
-	  for (; i < strlen (module); i++)
-	    filename[i] = TOLOWER (module[i]);
-	  filename[i] = '\0';
-	}
+      if (basename != NULL)
+	filename = xstrdup (basename);
       else
 	{
-	  size_t len = strlen (*pfilename) + 1;
-	  filename = (char *) alloca (len);
-	  memcpy (filename, *pfilename, len);
+	  const char **pfilename = A68_MODULE_FILES->get (module);
+	  if (pfilename == NULL)
+	    {
+	      /* Turn the module indicant in MODULE to lower-case.  */
+	      filename = (char *) alloca (strlen (module) + 1);
+	      size_t i = 0;
+	      for (; i < strlen (module); i++)
+		filename[i] = TOLOWER (module[i]);
+	      filename[i] = '\0';
+	    }
+	  else
+	    {
+	      size_t len = strlen (*pfilename) + 1;
+	      filename = (char *) alloca (len);
+	      memcpy (filename, *pfilename, len);
+	    }
 	}
 
       /* Try to read exports data in a buffer.  */
