@@ -1,3 +1,34 @@
+2026-02-14  Kalvis Duckmanton  <kalvisd@gmail.com>
+
+	PR target/112400
+	* g++.dg/torture/pr112400.C: New file.
+
+2026-02-14  Christopher Albert  <albert@tugraz.at>
+	    Harald Anlauf  <anlauf@gcc.gnu.org>
+
+	PR fortran/123943
+	* gfortran.dg/pr123943.f90: New test.
+
+2026-02-14  Paul Thomas  <pault@gcc.gnu.org>
+
+	PR fortran/99250
+	* gfortran.dg/coshape_1.f90: New test.
+
+2026-02-14  Andrew Pinski  <andrew.pinski@oss.qualcomm.com>
+
+	PR tree-optimization/124086
+	* c-c++-common/torture/pr124086-1.c: New test.
+	* g++.dg/torture/pr124086-1.C: New test.
+
+2026-02-14  Andrew Pinski  <andrew.pinski@oss.qualcomm.com>
+
+	* gcc.dg/tree-ssa/copy-prop-aggregate-return-1.c: Limit check to x86_64
+	and aarch64.
+
+2026-02-14  Andrew Pinski  <andrew.pinski@oss.qualcomm.com>
+
+	* g++.dg/warn/uninit-pr95825-1.C: Skip if no address sanitizer.
+
 2026-02-13  Vladimir N. Makarov  <vmakarov@redhat.com>
 
 	PR rtl-optimization/124079

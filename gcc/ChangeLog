@@ -1,3 +1,33 @@
+2026-02-14  Jakub Jelinek  <jakub@redhat.com>
+
+	PR cobol/122839
+	* doc/install.texi (COBOL-Specific Options): New.
+
+2026-02-14  Rainer Orth  <ro@CeBiTec.Uni-Bielefeld.DE>
+
+	* configure.ac <sparc*-*-*> (gcc_cv_as_sparc_gotdata_op): Remove.
+	* configure: Regenerate.
+	* config.in: Regenerate.
+	* config/sparc/sparc.md [!HAVE_AS_SPARC_GOTDATA_OP]: Remove.
+
+2026-02-14  Kalvis Duckmanton  <kalvisd@gmail.com>
+
+	PR target/112400
+	* config/vax/vax.md (casesi1): Wrap naked operand 1 with a USE
+	where used with the insn split to.
+	(*casesi1): Likewise naked incoming operand 1.
+
+2026-02-14  Maciej W. Rozycki  <macro@orcam.me.uk>
+
+	* config/vax/vax.cc (nonindexed_address_p): Move incoming RTX's
+	operand 0 access to the actual use places.
+
+2026-02-14  Andrew Pinski  <andrew.pinski@oss.qualcomm.com>
+
+	PR tree-optimization/124086
+	* tree-complex.cc (extract_component): Extend the check
+	for ssa names for VCE to include invariants.
+
 2026-02-13  David Malcolm  <dmalcolm@redhat.com>
 
 	* json-parsing.cc (selftest::assert_json_pointer_eq): New.
