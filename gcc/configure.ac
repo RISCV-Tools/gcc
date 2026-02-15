@@ -4744,62 +4744,6 @@ EOF
        [AC_DEFINE(HAVE_AS_OFFSETABLE_LO10, 1,
 	         [Define if your assembler supports offsetable %lo().])])
 
-    gcc_GAS_CHECK_FEATURE([FMAF, HPC, and VIS 3.0 instructions],
-      gcc_cv_as_sparc_fmaf,
-      [-xarch=v9d],
-      [.text
-       .register %g2, #scratch
-       .register %g3, #scratch
-       .align 4
-       fmaddd %f0, %f2, %f4, %f6
-       addxccc %g1, %g2, %g3
-       fsrl32 %f2, %f4, %f8
-       fnaddd %f10, %f12, %f14],,
-      [AC_DEFINE(HAVE_AS_FMAF_HPC_VIS3, 1,
-                [Define if your assembler supports FMAF, HPC, and VIS 3.0 instructions.])])
-
-    gcc_GAS_CHECK_FEATURE([SPARC4 instructions],
-      gcc_cv_as_sparc_sparc4,
-      [-xarch=sparc4],
-      [.text
-       .register %g2, #scratch
-       .register %g3, #scratch
-       .align 4
-       cxbe %g2, %g3, 1f
-1:     cwbneg %g2, %g3, 1f
-1:     sha1
-       md5
-       aes_kexpand0 %f4, %f6, %f8
-       des_round %f38, %f40, %f42, %f44
-       camellia_f %f54, %f56, %f58, %f60
-       kasumi_fi_xor %f46, %f48, %f50, %f52],,
-      [AC_DEFINE(HAVE_AS_SPARC4, 1,
-                [Define if your assembler supports SPARC4 instructions.])])
-
-    gcc_GAS_CHECK_FEATURE([SPARC5 and VIS 4.0 instructions],
-      gcc_cv_as_sparc_sparc5,
-      [-xarch=sparc5],
-      [.text
-       .register %g2, #scratch
-       .register %g3, #scratch
-       .align 4
-       subxc %g1, %g2, %g3
-       fpadd8 %f0, %f2, %f4],,
-      [AC_DEFINE(HAVE_AS_SPARC5_VIS4, 1,
-                [Define if your assembler supports SPARC5 and VIS 4.0 instructions.])])
-
-    gcc_GAS_CHECK_FEATURE([SPARC6 instructions],
-      gcc_cv_as_sparc_sparc6,
-      [-xarch=sparc6],
-      [.text
-       .register %g2, #scratch
-       .register %g3, #scratch
-       .align 4
-       rd %entropy, %g1
-       fpsll64x %f0, %f2, %f4],,
-      [AC_DEFINE(HAVE_AS_SPARC6, 1,
-                [Define if your assembler supports SPARC6 instructions.])])
-
     gcc_GAS_CHECK_FEATURE([LEON instructions],
       gcc_cv_as_sparc_leon,
       [-Aleon],
