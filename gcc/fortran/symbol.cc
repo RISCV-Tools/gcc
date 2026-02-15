@@ -5467,14 +5467,14 @@ gfc_type_is_extension_of (gfc_symbol *t1, gfc_symbol *t2)
    gfc_symbol *t2 -> pdt instance to be verified.
 
    In decl.cc, gfc_get_pdt_instance, a pdt instance is given a 3 character
-   prefix "Pdt", followed by an underscore list of the kind parameters,
+   prefix PDT_PREFIX, followed by an underscore list of the kind parameters,
    up to a maximum of 8 kind parameters.  To verify if a PDT Type corresponds
    to the template, this functions extracts t2's derive_type name,
    and compares it to the derive_type name of t1 for compatibility.
 
    For example:
 
-   t2->name = Pdtf_2_2; extract out the 'f' and compare with t1->name.  */
+   t2->name = PDT_PREFIXf_2_2; extract the 'f' and compare with t1->name.  */
 
 bool
 gfc_pdt_is_instance_of (gfc_symbol *t1, gfc_symbol *t2)
@@ -5483,7 +5483,8 @@ gfc_pdt_is_instance_of (gfc_symbol *t1, gfc_symbol *t2)
     return false;
 
   /* Limit comparison to length of t1->name to ignore new kind params.  */
-  if ( !(strncmp (&(t2->name[3]), t1->name, strlen (t1->name)) == 0) )
+  if ( !(strncmp (&(t2->name[PDT_PREFIX_LEN]), t1->name,
+		  strlen (t1->name)) == 0) )
     return false;
 
   return true;

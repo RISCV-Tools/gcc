@@ -16701,9 +16701,10 @@ resolve_typebound_procedure (gfc_symtree* stree)
 	  goto error;
 	}
 
-      if (resolve_bindings_derived->attr.pdt_template
-	  && gfc_pdt_is_instance_of (resolve_bindings_derived,
-				     CLASS_DATA (me_arg)->ts.u.derived)
+      if (((resolve_bindings_derived->attr.pdt_template
+	    && gfc_pdt_is_instance_of (resolve_bindings_derived,
+				       CLASS_DATA (me_arg)->ts.u.derived))
+	   || resolve_bindings_derived->attr.pdt_type)
           && (me_arg->param_list != NULL)
           && (gfc_spec_list_type (me_arg->param_list,
 				  CLASS_DATA(me_arg)->ts.u.derived)
