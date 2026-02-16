@@ -1,6 +1,6 @@
 // { dg-do run { target c++11 } }
-// { dg-require-thread-fence "" }
-// { dg-add-options no_pch }
+// { dg-require-atomic-cmpxchg-word "" }
+// { dg-add-options libatomic }
 
 #include <atomic>
 #include <cstring>
