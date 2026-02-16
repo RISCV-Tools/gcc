@@ -1,3 +1,54 @@
+2026-02-15  Rainer Orth  <ro@CeBiTec.Uni-Bielefeld.DE>
+
+	PR libstdc++/113450
+	PR libstdc++/123176
+	* config/sol2.h (INT8_TYPE): Change to signed char.
+	(INT_LEAST8_TYPE): Likewise.
+	(INT_FAST8_TYPE): Likewise.
+
+2026-02-15  Iain Sandoe  <iain@sandoe.co.uk>
+
+	* json.cc (pointer::token::print): Cast the value to pp_scalar
+	with (fmt_size_t).
+
+2026-02-15  Jan Hubicka  <hubicka@ucw.cz>
+
+	* ipa-devirt.cc (ipa_devirt): Improve statistics for multi-target
+	devirtualization; do not simple-call devirtualize already devirtualized calls.
+
+2026-02-15  Rainer Orth  <ro@CeBiTec.Uni-Bielefeld.DE>
+
+	* configure.ac <sparc*-*-*> (gcc_cv_as_sparc_fmaf): Remove.
+	(gcc_cv_as_sparc_sparc4): Remove.
+	(gcc_cv_as_sparc_sparc): Remove.
+	(gcc_cv_as_sparc_sparc6): Remove.
+	* configure: Regenerate.
+	* config.in: Regenerate.
+	* config/sparc/sparc.h (AS_NIAGARA3_FLAG) Remove.  Replace uses by
+	definition.
+	(AS_NIAGARA4_FLAG): Likewise.
+	(AS_NIAGARA7_FLAG): Likewise.
+	(AS_M8_FLAG): Likewise.
+	* config/sparc/sol2.h [!HAVE_AS_SPARC4]: Remove.
+	(AS_SPARC32_FLAG): Remove.
+	(AS_SPARC64_FLAG): Remove.
+	(AS_NIAGARA3_FLAG) Replace uses by definition.
+	(AS_NIAGARA4_FLAG): Likewise.
+	(AS_NIAGARA7_FLAG): Likewise.
+	(AS_M8_FLAG): Likewise.
+	* config/sparc/sparc.cc (sparc_option_override):
+	[!HAVE_AS_FMAF_HPC_VIS3]: Remove.
+	[!HAVE_AS_SPARC4]: Likewise.
+	[!HAVE_AS_SPARC5_VIS4]: Likewise.
+	[!HAVE_AS_SPARC6]: Likewise.
+
+2026-02-15  Andrew Pinski  <andrew.pinski@oss.qualcomm.com>
+
+	PR tree-optimization/124099
+	* tree-ssa-forwprop.cc (optimize_agr_copyprop_return): Don't do anything
+	if the return is already result decl or a deference of result decl.
+	Also reject non local var decls.
+
 2026-02-14  Jakub Jelinek  <jakub@redhat.com>
 
 	PR cobol/122839

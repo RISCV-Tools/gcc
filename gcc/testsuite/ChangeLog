@@ -1,3 +1,26 @@
+2026-02-15  Patrick Palka  <ppalka@redhat.com>
+
+	PR c++/121500
+	* g++.dg/cpp23/explicit-obj-lambda20.C: New test.
+
+2026-02-15  Andrew Pinski  <andrew.pinski@oss.qualcomm.com>
+
+	PR tree-optimization/124099
+	* gcc.dg/torture/tls-return-1.c: New test.
+
+2026-02-15  Paul Thomas  <pault@gcc.gnu.org>
+
+	PR fortran/108663
+	* gfortran.dg/pdt_15.f03: Modify tree dump test for new prefix.
+	* gfortran.dg/pdt_71.f03: Ditto.
+	* gfortran.dg/pdt_79.f03: Ditto.
+	* gfortran.dg/pdt_84.f03: New test.
+
+2026-02-15  Andrew Pinski  <andrew.pinski@oss.qualcomm.com>
+
+	* c-c++-common/torture/pr124086-1.c: Only enable
+	for power of 2 long double.
+
 2026-02-14  Kalvis Duckmanton  <kalvisd@gmail.com>
 
 	PR target/112400
