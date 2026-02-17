@@ -8711,6 +8711,37 @@ ix86_find_all_reg_uses (HARD_REG_SET &regset,
     }
 }
 
+/* Return true if the hard register REGNO used for a stack access is
+   defined in a basic block that dominates the block where it is used.  */
+
+static bool
+ix86_access_stack_p (unsigned int regno, basic_block bb,
+		     HARD_REG_SET &set_up_by_prologue,
+		     HARD_REG_SET &prologue_used)
+{
+  /* Get all BBs which set REGNO and dominate the current BB from all
+     DEFs of REGNO.  */
+  for (df_ref def = DF_REG_DEF_CHAIN (regno);
+       def;
+       def = DF_REF_NEXT_REG (def))
+    if (!DF_REF_IS_ARTIFICIAL (def)
+	&& !DF_REF_FLAGS_IS_SET (def, DF_REF_MAY_CLOBBER)
+	&& !DF_REF_FLAGS_IS_SET (def, DF_REF_MUST_CLOBBER))
+      {
+	basic_block set_bb = DF_REF_BB (def);
+	if (dominated_by_p (CDI_DOMINATORS, bb, set_bb))
+	  {
+	    rtx_insn *insn = DF_REF_INSN (def);
+	    /* Return true if INSN requires stack.  */
+	    if (requires_stack_frame_p (insn, prologue_used,
+					set_up_by_prologue))
+	      return true;
+	  }
+      }
+
+  return false;
+}
+
 /* Set stack_frame_required to false if stack frame isn't required.
    Update STACK_ALIGNMENT to the largest alignment, in bits, of stack
    slot used if stack frame is required and CHECK_STACK_SLOT is true.  */
@@ -8771,6 +8802,10 @@ ix86_find_max_used_stack_alignment (unsigned int &stack_alignment,
       bitmap_set_bit (worklist, HARD_FRAME_POINTER_REGNUM);
     }
 
+  HARD_REG_SET hard_stack_slot_access = stack_slot_access;
+
+  calculate_dominance_info (CDI_DOMINATORS);
+
   unsigned int regno;
 
   do
@@ -8798,9 +8833,19 @@ ix86_find_max_used_stack_alignment (unsigned int &stack_alignment,
 	if (!NONJUMP_INSN_P (insn))
 	  continue;
 
-	data.reg = DF_REF_REG (ref);
-	note_stores (insn, ix86_update_stack_alignment, &data);
+	if (TEST_HARD_REG_BIT (hard_stack_slot_access, regno)
+	    || ix86_access_stack_p (regno, BLOCK_FOR_INSN (insn),
+				    set_up_by_prologue, prologue_used))
+	  {
+	    /* Update stack alignment if REGNO is used for stack
+	       access.  */
+	    data.reg = DF_REF_REG (ref);
+	    note_stores (insn, ix86_update_stack_alignment, &data);
+	    continue;
+	  }
       }
+
+  free_dominance_info (CDI_DOMINATORS);
 }
 
 /* Finalize stack_realign_needed and frame_pointer_needed flags, which
