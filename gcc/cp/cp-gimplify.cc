@@ -986,6 +986,9 @@ cp_gimplify_expr (tree *expr_p, gimple_seq *pre_p, gimple_seq *post_p)
 						    &CALL_EXPR_ARG (*expr_p,
 								    0));
 		break;
+	      case CP_BUILT_IN_CONSTEXPR_DIAG:
+		*expr_p = void_node;
+		break;
 	      default:
 		break;
 	      }
