@@ -235,6 +235,10 @@ get_reflection (location_t loc, tree t, reflect_kind kind/*=REFLECT_UNDEF*/)
 	t = dtor;
     }
 
+  /* Look through block scope externs.  */
+  if (VAR_OR_FUNCTION_DECL_P (t) && DECL_LOCAL_DECL_P (t))
+    t = DECL_LOCAL_DECL_ALIAS (t);
+
   if (t == error_mark_node)
     return error_mark_node;
 
@@ -1708,6 +1712,8 @@ eval_has_default_argument (tree r, reflect_kind kind)
   if (eval_is_function_parameter (r, kind) == boolean_false_node)
     return boolean_false_node;
   r = maybe_update_function_parm (r);
+  if (DECL_HAS_DEFAULT_ARGUMENT_P (r))
+    return boolean_true_node;
   tree fn = DECL_CONTEXT (r);
   tree args = FUNCTION_FIRST_USER_PARM (fn);
   tree types = FUNCTION_FIRST_USER_PARMTYPE (fn);
