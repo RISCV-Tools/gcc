@@ -482,10 +482,6 @@ proc v3-minimum-std { test default_std max_std } {
 	    return $s
 	}
     }
-    # TODO: replace all c++2a with c++20 and remove this case.
-    if [search_for $test "\{ dg-do * \{ target c++2a"] {
-	return 20
-    }
     return $default_std
 }
 
