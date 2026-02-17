@@ -3903,8 +3903,11 @@ ix86_get_dominator_for_reg (unsigned int regno, basic_block bb)
    registers, if DEST is FLAGS register.  */
 
 static void
-ix86_check_flags_reg (rtx dest, const_rtx, void *data)
+ix86_check_flags_reg (rtx dest, const_rtx x, void *data)
 {
+  if (GET_CODE (x) == CLOBBER)
+    return;
+
   auto_bitmap *live_caller_saved_regs = (auto_bitmap *) data;
   if (REG_P (dest) && REGNO (dest) == FLAGS_REG)
     bitmap_set_bit (*live_caller_saved_regs, FLAGS_REG);
