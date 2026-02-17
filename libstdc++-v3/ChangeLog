@@ -1,3 +1,47 @@
+2026-02-16  Tomasz Kamiński  <tkaminsk@redhat.com>
+
+	PR libstdc++/119745
+	* include/bits/basic_string.h (basic_string::_M_construct)
+	[__cplusplus >= 202302L]: Declare.
+	(basic_string::basic_string(basic_string&&, size_type, const _Alloc&))
+	(basic_string(basic_string&&, size_type, size_type, const _Alloc&))
+	(basic_string::substr(size_type, size_type) &&)
+	(basic_string::substr(size_type) &&) [__cplusplus >= 202302L]: Define.
+	* include/bits/basic_string.tcc (basic_string::_M_construct)
+	[__cplusplus >= 202302L]: Define.
+	* testsuite/21_strings/basic_string/operations/substr/rvalue.cc: New test.
+
+2026-02-16  Tomasz Kamiński  <tkaminsk@redhat.com>
+
+	* include/std/mdspan (std::submdspan_extents): Rename to...
+	(std::subextents): Renamed from submdspan_extents.
+	(std::submdspan_canonicalize_slices): Rename to...
+	(std::canonical_slices): Renamed from submdspan_canonicalize_slices.
+	* testsuite/23_containers/mdspan/submdspan/submdspan_canonicalize_slices.cc:
+	Move to...
+	* testsuite/23_containers/mdspan/submdspan/canonical_slices.cc: ...here.
+	Updated calls to submdspan_canonicalize_slices.
+	* testsuite/23_containers/mdspan/submdspan/submdspan_canonicalize_slices_neg.cc:
+	Move to...
+	* testsuite/23_containers/mdspan/submdspan/canonical_slices_neg.cc: ...here.
+	Updated calls to submdspan_canonicalize_slices.
+	* testsuite/23_containers/mdspan/submdspan/submdspan_extents.cc: Move to...
+	* testsuite/23_containers/mdspan/submdspan/subextents.cc: ...here.
+	Qualified and renamed calls to submdspan_extents.
+	* testsuite/23_containers/mdspan/submdspan/submdspan_extents_neg.cc: Move to...
+	* testsuite/23_containers/mdspan/submdspan/subextents_neg.cc: ...here.
+	Qualified and renamed calls to submdspan_extents.
+
+2026-02-16  Ivan Lazaric  <ivan.lazaric1@gmail.com>
+	    Jonathan Wakely  <jwakely@redhat.com>
+
+	* include/bits/fs_path.h: Include bits/formatfwd.h.
+	(std::formatter<filesystem::path, _CharT>): Define.
+	* include/bits/version.def (format_path): Define.
+	* include/bits/version.h: Regenerate.
+	* include/std/filesystem: Expose __cpp_lib_format_path.
+	* testsuite/std/format/fs_path.cc: New test.
+
 2026-02-13  Tomasz Kamiński  <tkaminsk@redhat.com>
 
 	* testsuite/20_util/scoped_allocator/construct_pair_c++2a.cc
