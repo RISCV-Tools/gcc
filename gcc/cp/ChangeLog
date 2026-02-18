@@ -1,3 +1,77 @@
+2026-02-17  Patrick Palka  <ppalka@redhat.com>
+
+	PR c++/121822
+	* cvt.cc (convert_to_void): Don't evaluate a concept-id
+	in an unevaluated context.
+
+2026-02-17  Patrick Palka  <ppalka@redhat.com>
+
+	PR c++/122318
+	PR c++/101670
+	* pt.cc (unify) <default>: Accept LAMBDA_EXPR.
+
+2026-02-17  Jakub Jelinek  <jakub@redhat.com>
+
+	* cp-tree.h (enum cp_built_in_function): Add
+	CP_BUILT_IN_CONSTEXPR_DIAG.
+	(cexpr_str::cexpr_str): Add new default ctor.
+	(cexpr_str::type_check): Add optional allow_char8_t arg.
+	(cexpr_str::extract): Add optional ctx, non_constant_p, overflow_p
+	and jump_target arguments.
+	* cp-gimplify.cc (cp_gimplify_expr): Throw away
+	__builtin_constexpr_diag calls after gimplification of
+	their arguments.
+	* decl.cc (cxx_init_decl_processing): Create __builtin_constexpr_diag
+	FE builtin decl.
+	* constexpr.cc (call_stack, call_stack_tick, last_cx_error_tick):
+	Moved earlier.
+	(cxx_eval_constexpr_diag): New function.
+	(cxx_eval_builtin_function_call): Handle __builtin_constexpr_diag
+	calls.
+	* tree.cc (builtin_valid_in_constant_expr_p): Return true for
+	CP_BUILT_IN_CONSTEXPR_DIAG.
+	* semantics.cc (cexpr_str::type_check): Add allow_char8_t argument,
+	if true, allow data to return const char8_t *.
+	(cexpr_str::extract): Add ctx, non_constant_p, overflow_p and
+	jump_target arguments, if they are non-NULL, evalute expressions
+	in that context rather than using cxx_constant_value and translate
+	back to SOURCE_CHARSET even if message_data or message_sz are NULL.
+
+2026-02-17  Jakub Jelinek  <jakub@redhat.com>
+
+	PR c++/120685
+	* typeck2.cc (build_functional_cast_1): For C++23 auto(x)
+	without tf_warning or tf_error return error_mark_node instead of
+	emitting pedwarn and handling it.
+	* semantics.cc (finish_compound_literal): Similarly for C++26
+	auto{x}.
+
+2026-02-17  Jakub Jelinek  <jakub@redhat.com>
+
+	PR c++/123612
+	* cp-tree.h (DECL_HAS_DEFAULT_ARGUMENT_P): Define.
+	* decl.cc (merge_decl_arguments): For -freflection and
+	extern_alias set DECL_HAS_DEFAULT_ARGUMENT_P (oldarg)
+	if newdecl has a default argument for that parameter,
+	otherwise propagate the flag.
+	* reflect.cc (get_reflection): For DECL_LOCAL_DECL_P
+	use its DECL_LOCAL_DECL_ALIAS.
+	(eval_has_default_argument): Return boolean_true_node
+	also if DECL_HAS_DEFAULT_ARGUMENT_P flag is set.
+
+2026-02-17  David Malcolm  <dmalcolm@redhat.com>
+
+	PR diagnostics/122001
+	* error.cc (auto_context_line::auto_context_line): Initialize
+	m_nesting_level and m_location_printed.  Update the condition
+	for printing location in ctor to also do it at top-level
+	nesting level.  Record into m_location_printed if we did
+	print the location.
+	(auto_context_line::~auto_context_line): Don't call print_location
+	if we already printed it in the ctor.
+	(auto_context_line::m_nesting_level): New field.
+	(auto_context_line::m_location_printed): New field.
+
 2026-02-15  Patrick Palka  <ppalka@redhat.com>
 
 	PR c++/121500

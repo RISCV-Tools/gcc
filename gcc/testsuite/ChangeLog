@@ -1,3 +1,146 @@
+2026-02-17  H.J. Lu  <hjl.tools@gmail.com>
+
+	PR target/124136
+	* g++.target/i386/pr124136.C: New file.
+
+2026-02-17  David Malcolm  <dmalcolm@redhat.com>
+
+	PR analyzer/124104
+	* c-c++-common/analyzer/casts-3.c: New test.
+	* gcc.dg/analyzer/ice-pr124104.c: New test.
+
+2026-02-17  David Malcolm  <dmalcolm@redhat.com>
+
+	PR analyzer/124139
+	* g++.dg/analyzer/exception-ice-pr124139.C: New test.
+
+2026-02-17  Richard Earnshaw  <rearnsha@arm.com>
+
+	PR target/124134
+	* gcc.target/arm/pr124134.c: New test.
+
+2026-02-17  Jakub Jelinek  <jakub@redhat.com>
+
+	PR rtl-optimization/123048
+	* gcc.dg/pr123048.c: New test.
+
+2026-02-17  Patrick Palka  <ppalka@redhat.com>
+
+	PR c++/121822
+	* g++.dg/cpp2a/concepts-decltype6.C: New test.
+
+2026-02-17  Patrick Palka  <ppalka@redhat.com>
+
+	PR c++/122318
+	PR c++/101670
+	* g++.dg/cpp2a/lambda-targ20.C: New test.
+	* g++.dg/cpp2a/lambda-targ21.C: New test.
+
+2026-02-17  Jakub Jelinek  <jakub@redhat.com>
+
+	* g++.dg/ext/constexpr-diag1.C: New test.
+	* g++.dg/ext/constexpr-diag2.C: New test.
+	* g++.dg/ext/constexpr-diag3.C: New test.
+	* g++.dg/ext/constexpr-diag4.C: New test.
+	* g++.dg/ext/constexpr-diag5.C: New test.
+	* g++.dg/ext/constexpr-diag6.C: New test.
+
+2026-02-17  Richard Biener  <rguenther@suse.de>
+
+	* gfortran.dg/vect/vect.exp: Remove special options
+	handling.  Glob all *.\[fF\]{,90,95,03,08} files.
+	* gfortran.dg/vect/O3-bb-slp-1.f: Add dg-additional-options.
+	* gfortran.dg/vect/O3-bb-slp-2.f: Likewise.
+	* gfortran.dg/vect/O3-pr36119.f90: Likewise.
+	* gfortran.dg/vect/O3-pr39595.f: Likewise.
+	* gfortran.dg/vect/O3-pr49957.f: Likewise.
+	* gfortran.dg/vect/Ofast-pr50414.f90: Likewise.
+	* gfortran.dg/vect/cost-model-pr34445.f: Likewise.
+	* gfortran.dg/vect/cost-model-pr34445a.f: Likewise.
+	* gfortran.dg/vect/fast-math-mgrid-resid.f: Likewise.
+	* gfortran.dg/vect/fast-math-pr33299.f90: Likewise.
+	* gfortran.dg/vect/fast-math-pr37021.f90: Likewise.
+	* gfortran.dg/vect/fast-math-pr38968.f90: Likewise.
+	* gfortran.dg/vect/fast-math-real8-pr40801.f90: Likewise.
+	* gfortran.dg/vect/fast-math-rnflow-trs2a2.f90: Likewise.
+	* gfortran.dg/vect/fast-math-vect-8.f90: Likewise.
+	* gfortran.dg/vect/no-fre-no-copy-prop-O3-pr51704.f90: Likewise.
+	* gfortran.dg/vect/no-vfa-pr32377.f90: Likewise.
+	* gfortran.dg/vect/no-vfa-pr32457.f90: Likewise.
+	* gfortran.dg/vect/mask-store-1.f90: Add missing dg-do.
+
+2026-02-17  Richard Biener  <rguenther@suse.de>
+
+	PR tree-optimization/124130
+	* g++.dg/torture/pr124130.C: New testcase.
+
+2026-02-17  Richard Biener  <rguenther@suse.de>
+
+	PR tree-optimization/124132
+	* gcc.dg/torture/pr124132.c: New testcase.
+
+2026-02-17  Rainer Orth  <ro@CeBiTec.Uni-Bielefeld.DE>
+
+	* gcc.dg/hierarchical-discriminator-loop-version.c
+	(scan-assembler): Require gas.
+	* gcc.dg/hierarchical-discriminator-unroll.c: Likewise.
+	* gcc.dg/hierarchical-discriminator-vect-version.c: Likewise.
+
+2026-02-17  Rainer Orth  <ro@CeBiTec.Uni-Bielefeld.DE>
+
+	* gcc.dg/asm-hard-reg-1.c: Simplify x86 target selectors.  Remove
+	duplicates.
+
+2026-02-17  Rainer Orth  <ro@CeBiTec.Uni-Bielefeld.DE>
+
+	* gcc.dg/tree-ssa/ldexp.c (dg-additional-options): Add -std=c99.
+
+2026-02-17  Richard Biener  <rguenther@suse.de>
+
+	* gcc.dg/torture/ssa-fre-7.c: Properly use __SIZETYPE__
+	where required.
+
+2026-02-17  Rainer Orth  <ro@CeBiTec.Uni-Bielefeld.DE>
+
+	* gcc.dg/ipa/pr122458.c: xfail without gas.
+
+2026-02-17  Jakub Jelinek  <jakub@redhat.com>
+
+	PR c++/124119
+	* g++.dg/reflect/is_type_alias2.C (W): New type alias.
+	Assert is_type_alias (^^W).  Don't assert is_type_alias (^^size_t).
+
+2026-02-17  Jakub Jelinek  <jakub@redhat.com>
+
+	PR c++/120685
+	* g++.dg/cpp23/auto-fncast19.C: New test.
+
+2026-02-17  Jakub Jelinek  <jakub@redhat.com>
+
+	* gcc.dg/tree-ssa/copy-prop-aggregate-return-1.c: Fix up target
+	selector.
+
+2026-02-17  Jakub Jelinek  <jakub@redhat.com>
+
+	PR c++/123612
+	* g++.dg/reflect/pr123612.C: New test.
+
+2026-02-17  David Malcolm  <dmalcolm@redhat.com>
+
+	PR diagnostics/122001
+	* g++.dg/diagnostic/instantiation-context-pr122001-1.C: New test.
+	* g++.dg/diagnostic/instantiation-context-pr122001-2.C: New test.
+
+2026-02-17  David Malcolm  <dmalcolm@redhat.com>
+
+	PR analyzer/121928
+	* g++.dg/analyzer/fanalyzer-show-events-in-system-headers-default.C:
+	Add -Wno-analyzer-too-complex.
+	* g++.dg/analyzer/fanalyzer-show-events-in-system-headers-no.C:
+	Likewise.
+	* g++.dg/analyzer/fanalyzer-show-events-in-system-headers.C:
+	Likewise.
+
 2026-02-16  Jose E. Marchesi  <jemarch@gnu.org>
 
 	PR algol68/124115

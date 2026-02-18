@@ -1,3 +1,23 @@
+2026-02-17  Tomasz Kamiński  <tkaminsk@redhat.com>
+
+	PR libstdc++/124124
+	* testsuite/29_atomics/atomic/cons/zero_padding.cc: Updated
+	Ctor class and move test_floating to...
+	* testsuite/29_atomics/atomic_float/zero_padding.cc: Extracted
+	test_floating.
+
+2026-02-17  Tomasz Kamiński  <tkaminsk@redhat.com>
+
+	PR libstdc++/124124
+	* testsuite/29_atomics/atomic/cons/zero_padding.cc: Adjust
+	dg-require.
+
+2026-02-17  Jakub Jelinek  <jakub@redhat.com>
+
+	* src/c++23/std.cc.in (std::submdspan_canonicalize_slices,
+	std::submdspan_extents): Remove exports.
+	(std::canonical_slices, std::subextents): New exports.
+
 2026-02-16  Tomasz Kamiński  <tkaminsk@redhat.com>
 
 	PR libstdc++/119745

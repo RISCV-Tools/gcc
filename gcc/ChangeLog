@@ -1,3 +1,46 @@
+2026-02-17  H.J. Lu  <hjl.tools@gmail.com>
+
+	PR target/124136
+	* config/i386/i386-features.cc (ix86_check_flags_reg): Don't
+	mark clobbered FLAGS_REG as live.
+
+2026-02-17  Richard Earnshaw  <rearnsha@arm.com>
+
+	PR target/124134
+	* config/arm/arm.md (movsfcc): FAIL if using restricted IT
+	blocks and we lack VSEL.
+	(movdfcc): Likewise.
+
+2026-02-17  Jeff Law  <jeffrey.law@oss.qualcomm.com>
+
+	PR target/124048
+	* config/riscv/zicond.md (conditional AND patterns): Fix missed
+	flipping the condition's test in RTL output.
+
+2026-02-17  Richard Biener  <rguenther@suse.de>
+
+	PR tree-optimization/124130
+	* tree-inline.cc (copy_edges_for_bb): Fixup noreturn calls
+	with abnormal edge source.
+
+2026-02-17  Richard Biener  <rguenther@suse.de>
+
+	PR tree-optimization/124132
+	* tree-ssa-loop-split.cc (compute_new_first_bound): Fix
+	bound difference computation.
+
+2026-02-17  Jakub Jelinek  <jakub@redhat.com>
+
+	PR target/120233
+	* gimple-ssa-store-merging.cc (find_bswap_or_nop_2): New function.
+	(find_bswap_or_nop): Move CONSTRUCTOR handling to above function,
+	call it instead of find_bswap_or_nop_1.
+	(bswap_replace): Handle VEC_PACK_TRUNC_EXPR like CONSTRUCTOR.
+	(maybe_optimize_vector_constructor): Likewise.
+	(pass_optimize_bswap::execute): Likewise.
+	(get_status_for_store_merging): Likewise.
+	(pass_store_merging::execute): Likewise.
+
 2026-02-15  Rainer Orth  <ro@CeBiTec.Uni-Bielefeld.DE>
 
 	PR libstdc++/113450
