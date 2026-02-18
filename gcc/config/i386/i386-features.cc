@@ -4083,7 +4083,9 @@ ix86_emit_tls_call (rtx tls_set, x86_cse_kind kind, basic_block bb,
 
 	  rtx link;
 	  for (link = REG_NOTES (insn); link; link = XEXP (link, 1))
-	    if (REG_NOTE_KIND (link) == REG_DEAD
+	    if ((REG_NOTE_KIND (link) == REG_DEAD
+		 || (REG_NOTE_KIND (link) == REG_UNUSED
+		     && REGNO (XEXP (link, 0)) == FLAGS_REG))
 		&& REG_P (XEXP (link, 0)))
 	      {
 		/* Mark the live caller-saved register as dead.  */
