@@ -25,5 +25,23 @@
 
 module Standard =
 def
+    { 10.2.3.8.l L bitspack
+      ───────────────────── }
+
+    {iter L  {short short}  {short}  {} {long}  {long long}}
+    {iter L_ {short_short_} {short_} {} {long_} {long_long_}}
+    pub proc {L_}bits_pack = ([]bool a) {L} bits:
+       if int n = UPB a[@1];
+          n <= {L_}bits_width
+       then {L} bits c := {L} 16r0;
+            for i to {L_}bits_width
+            do if i > {L_}bits_width - n
+                  andth a[@1][i - {L_}bits_width + n]
+               then c := c OR ({L} 2r1 SHL ({L_}bits_width - i)) fi
+            od;
+            c
+       fi;
+    {reti}
+
     skip
 fed

@@ -414,23 +414,8 @@ stand_prelude (void)
   a68_idf (A68_STD, "errorchar", M_CHAR, a68_lower_errorchar);
   a68_idf (A68_STD, "nullcharacter", M_CHAR, a68_lower_nullcharacter);
   a68_idf (A68_STD, "blank", M_CHAR, a68_lower_blank);
-  /* BITS procedures.  */
-  MOID_T *m = a68_proc (M_BITS, M_ROW_BOOL, NO_MOID);
-  a68_idf (A68_STD, "bitspack", m);
-  /* SHORT BITS procedures.  */
-  m = a68_proc (M_SHORT_BITS, M_ROW_BOOL, NO_MOID);
-  a68_idf (A68_STD, "shortbitspack", m);
-  /* SHORT SHORT BITS procedures.  */
-  m = a68_proc (M_SHORT_SHORT_BITS, M_ROW_BOOL, NO_MOID);
-  a68_idf (A68_STD, "shortshortbitspack", m);
-  /* LONG BITS procedures.  */
-  m = a68_proc (M_LONG_BITS, M_ROW_BOOL, NO_MOID);
-  a68_idf (A68_STD, "longbitspack", m);
-  /* LONG LONG BITS procedures.  */
-  m = a68_proc (M_LONG_LONG_BITS, M_ROW_BOOL, NO_MOID);
-  a68_idf (A68_STD, "longlongbitspack", m);
   /* RNG procedures.  */
-  m = a68_proc (M_VOID, M_INT, NO_MOID);
+  MOID_T *m = a68_proc (M_VOID, M_INT, NO_MOID);
   a68_idf (A68_STD, "firstrandom", m);
   /* REAL procedures.  */
   m = A68_MCACHE (proc_real);
