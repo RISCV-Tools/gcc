@@ -564,6 +564,7 @@ gfc_check_conflict (symbol_attribute *attr, const char *name, locus *where)
   conf (pointer, elemental);
   conf (pointer, codimension);
   conf (allocatable, elemental);
+  conf (threadprivate, omp_groupprivate);
 
   conf (in_common, automatic);
   conf (result, automatic);
