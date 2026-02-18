@@ -7341,8 +7341,7 @@ process_metafunction (const constexpr_ctx *ctx, tree fun, tree call,
   tree type = NULL_TREE, ht, info;
   reflect_kind kind = REFLECT_UNDEF;
   for (int argno = 0; argno < 3; ++argno)
-    switch ((minfo->kind >> ((argno + 1) * METAFN_KIND_SHIFT))
-	    & METAFN_KIND_MASK)
+    switch (METAFN_KIND_ARG (argno))
       {
       case METAFN_KIND_ARG_VOID:
 	break;
@@ -7354,13 +7353,10 @@ process_metafunction (const constexpr_ctx *ctx, tree fun, tree call,
 	if (*jump_target || *non_constant_p)
 	  return NULL_TREE;
 	ht = REFLECT_EXPR_HANDLE (info);
-	if (((minfo->kind >> ((argno + 1) * METAFN_KIND_SHIFT))
-	     & METAFN_KIND_MASK) == METAFN_KIND_ARG_TINFO)
-	  {
-	    if (eval_is_type (ht) != boolean_true_node)
-	      return throw_exception_nontype (loc, ctx, fun, non_constant_p,
-					      jump_target);
-	  }
+	if (METAFN_KIND_ARG (argno) == METAFN_KIND_ARG_TINFO
+	    && eval_is_type (ht) != boolean_true_node)
+	  return throw_exception_nontype (loc, ctx, fun, non_constant_p,
+					  jump_target);
 	if (argno == 0)
 	  {
 	    kind = REFLECT_EXPR_KIND (info);
