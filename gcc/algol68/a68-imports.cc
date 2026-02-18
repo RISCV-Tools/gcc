@@ -231,9 +231,9 @@ a68_read_export_data (int fd, uint64_t offset, char **pbuf, size_t *plen,
 
 /* Look for export data in an object file.  */
 
-static char *
+char *
 a68_find_object_export_data (const std::string& filename,
-			     int fd, uint64_t offset, size_t *psize)
+			     int fd, off_t offset, size_t *psize)
 {
   char *buf;
   size_t len;
@@ -324,11 +324,26 @@ a68_find_export_data (const std::string &filename, int fd, size_t *psize)
       return buf;
     }
 
-#if 0
   /* See if we can read this as an archive.  */
-  if (Import::is_archive_magic(buf))
-    return Import::find_archive_export_data(filename, fd, location);
-#endif
+  {
+    char buf[8];
+
+    if (lseek (fd, 0, SEEK_SET) < 0)
+      {
+	a68_error (NO_NODE, "lseek Z failed", filename.c_str ());
+	return NULL;
+      }
+
+    c = read (fd, buf, 8);
+    if (c < 8)
+      {
+	a68_error (NO_NODE, "read Z failed", filename.c_str ());
+	return NULL;
+      }
+
+    if (a68_is_archive_magic (buf))
+      return a68_find_archive_export_data(filename.c_str (), fd, psize);
+  }
 
   return NULL;
 }

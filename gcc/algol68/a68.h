@@ -1128,6 +1128,13 @@ void a68_do_exports (NODE_T *p);
 
 MOIF_T *a68_open_packet (const char *module);
 bool a68_process_module_map (const char *map, const char **errmsg);
+char *a68_find_object_export_data (const std::string &filename,
+				   int fd, off_t offset, size_t *size);
+
+/* a68-imports-archive.cc  */
+
+bool a68_is_archive_magic (const char *bytes);
+char *a68_find_archive_export_data (const char *filename, int fd, size_t *size);
 
 /* a68-parser-debug.cc  */
 
