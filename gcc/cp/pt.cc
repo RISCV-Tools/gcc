@@ -7576,10 +7576,11 @@ tparm_object_argument (tree var)
    indicated TYPE.  If the conversion is successful, return the
    converted value.  If the conversion is unsuccessful, return
    NULL_TREE if we issued an error message, or error_mark_node if we
-   did not.  We issue error messages for out-and-out bad template
-   parameters, but not simply because the conversion failed, since we
-   might be just trying to do argument deduction.  Both TYPE and EXPR
-   must be non-dependent.
+   did not.  If tf_error is not set in COMPLAIN, whether NULL_TREE
+   or error_mark_node is returned doesn't matter.  We issue error
+   messages for out-and-out bad template parameters, but not simply
+   because the conversion failed, since we might be just trying to
+   do argument deduction.  Both TYPE and EXPR must be non-dependent.
 
    The conversion follows the special rules described in
    [temp.arg.nontype], and it is much more strict than an implicit
