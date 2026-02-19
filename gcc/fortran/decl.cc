@@ -9267,7 +9267,8 @@ cleanup:
 	  ns = ns->sibling;
 	}
 
-      gfc_free_namespace (gfc_current_ns);
+      /* The namespace can still be referenced by parser state and code nodes;
+	 let normal block unwinding/freeing own its lifetime.  */
       gfc_current_ns = parent_ns;
       gfc_state_stack = gfc_state_stack->previous;
       state = gfc_current_state ();
