@@ -20677,13 +20677,13 @@ avx_vpermilp_parallel (rtx par, machine_mode mode)
 	 then fallthru.  */
       for (i = 4; i < 6; ++i)
 	{
-	  if (ipar[i] < 4 || ipar[i] >= 6)
+	  if (!IN_RANGE (ipar[i], 4, 5))
 	    return 0;
 	  mask |= (ipar[i] - 4) << i;
 	}
       for (i = 6; i < 8; ++i)
 	{
-	  if (ipar[i] < 6)
+	  if (!IN_RANGE (ipar[i], 6, 7))
 	    return 0;
 	  mask |= (ipar[i] - 6) << i;
 	}
@@ -20695,13 +20695,13 @@ avx_vpermilp_parallel (rtx par, machine_mode mode)
          a 128-bit lane.  */
       for (i = 0; i < 2; ++i)
 	{
-	  if (ipar[i] >= 2)
+	  if (!IN_RANGE (ipar[i], 0, 1))
 	    return 0;
 	  mask |= ipar[i] << i;
 	}
       for (i = 2; i < 4; ++i)
 	{
-	  if (ipar[i] < 2 || ipar[i] >= 4)
+	  if (!IN_RANGE (ipar[i], 2, 3))
 	    return 0;
 	  mask |= (ipar[i] - 2) << i;
 	}
