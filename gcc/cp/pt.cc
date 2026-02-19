@@ -8017,6 +8017,18 @@ convert_nontype_argument (tree type, tree expr, tsubst_flags_t complain)
 		   "because it is of type %qT", expr, type, TREE_TYPE (expr));
 	  return NULL_TREE;
 	}
+      if (!integer_zerop (expr) && !val_dep_p)
+	{
+	  if (complain & tf_error)
+	    {
+	      expr = cxx_constant_value (expr);
+	      if (expr == error_mark_node)
+		return NULL_TREE;
+	      gcc_assert (integer_zerop (expr));
+	    }
+	  else
+	    return NULL_TREE;
+	}
       return expr;
     }
   else if (CLASS_TYPE_P (type))
@@ -8036,6 +8048,18 @@ convert_nontype_argument (tree type, tree expr, tsubst_flags_t complain)
 	    error ("%qE is not a valid template argument for type %qT "
 		   "because it is of type %qT", expr, type, TREE_TYPE (expr));
 	  return NULL_TREE;
+	}
+      if (!REFLECT_EXPR_P (expr) && !val_dep_p)
+	{
+	  if (complain & tf_error)
+	    {
+	      expr = cxx_constant_value (expr);
+	      if (expr == error_mark_node)
+		return NULL_TREE;
+	      gcc_assert (REFLECT_EXPR_P (expr));
+	    }
+	  else
+	    return NULL_TREE;
 	}
       return expr;
     }
