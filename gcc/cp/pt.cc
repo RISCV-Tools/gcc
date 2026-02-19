@@ -33200,11 +33200,9 @@ finish_expansion_stmt (tree expansion_stmt, tree args,
       range_temp = convert_from_reference (build_range_temp (expansion_init));
       iter_type = cp_perform_range_for_lookup (range_temp, &begin_expr,
 					       &end_expr, tf_none);
-      if (begin_expr != error_mark_node && end_expr != error_mark_node)
-	{
-	  kind = esk_iterating;
-	  gcc_assert (iter_type);
-	}
+      if (iter_type != error_mark_node
+	  || (begin_expr != error_mark_node && (end_expr != error_mark_node)))
+	kind = esk_iterating;
     }
   if (kind == esk_iterating)
     {

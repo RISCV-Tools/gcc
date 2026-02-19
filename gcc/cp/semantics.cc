@@ -3318,10 +3318,12 @@ finish_call_expr (tree fn, vec<tree, va_gc> **args, bool disallow_virtual,
   tree result;
   tree orig_fn;
   vec<tree, va_gc> *orig_args = *args;
+  tsubst_flags_t orig_complain = complain;
 
   if (fn == error_mark_node)
     return error_mark_node;
 
+  complain &= ~tf_any_viable;
   gcc_assert (!TYPE_P (fn));
 
   /* If FN may be a FUNCTION_DECL obfuscated by force_paren_expr, undo
@@ -3539,7 +3541,7 @@ finish_call_expr (tree fn, vec<tree, va_gc> **args, bool disallow_virtual,
 	    }
 
 	  /* A call to a namespace-scope function.  */
-	  result = build_new_function_call (fn, args, complain);
+	  result = build_new_function_call (fn, args, orig_complain);
 	}
     }
   else if (TREE_CODE (fn) == PSEUDO_DTOR_EXPR)
