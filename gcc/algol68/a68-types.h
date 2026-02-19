@@ -151,7 +151,8 @@ typedef struct LOW_CTX_T LOW_CTX_T;
 /* Type of the lowerer routines defined in a68-low-prelude.cc.  */
 typedef tree (*LOWERER_T) (struct NODE_T *, struct LOW_CTX_T);
 
-#define NO_LOWERER a68_lower_unimplemented
+#define NO_LOWERER NULL
+#define LOWERER_UNIMPL a68_lower_unimplemented
 
 struct GTY((chain_next ("%h.more"), chain_prev ("%h.less"))) KEYWORD_T
 {

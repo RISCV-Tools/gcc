@@ -54,11 +54,12 @@
 tree
 a68_lower_identifier (NODE_T *p, LOW_CTX_T ctx)
 {
-  if (TAG_TABLE (TAX (p)) == A68_STANDENV)
+  LOWERER_T lowerer = LOWERER (TAX (p));
+
+  if (lowerer != NO_LOWERER)
     {
       /* This identifier is defined in the standard prelude.  Use its lowering
 	 handler.  */
-      LOWERER_T lowerer = LOWERER (TAX (p));
       return (*lowerer) (p, ctx);
     }
   else
@@ -959,11 +960,12 @@ a68_lower_formula (NODE_T *p, LOW_CTX_T ctx)
     return a68_lower_tree (SUB (p), ctx);
   else
     {
+      LOWERER_T lowerer = LOWERER (TAX (NEXT (SUB (p))));
+
       /* If the operator is defined in the standard prelude, then use its lowering
 	 code.  */
-      if (TAG_TABLE (TAX (NEXT (SUB (p)))) == A68_STANDENV)
+      if (lowerer != NO_LOWERER)
 	{
-	  LOWERER_T lowerer = LOWERER (TAX (NEXT (SUB (p))));
 	  return (*lowerer) (p, ctx);
 	}
       else
@@ -991,11 +993,12 @@ a68_lower_formula (NODE_T *p, LOW_CTX_T ctx)
 tree
 a68_lower_monadic_formula (NODE_T *p, LOW_CTX_T ctx)
 {
+  LOWERER_T lowerer = LOWERER (TAX (SUB (p)));
+
   /* If the operator is defined in the standard prelude, then use its lowering
      code.  */
-  if (TAG_TABLE (TAX (SUB (p))) == A68_STANDENV)
+  if (lowerer != NO_LOWERER)
     {
-      LOWERER_T lowerer = LOWERER (TAX (SUB (p)));
       return (*lowerer) (p, ctx);
     }
   else

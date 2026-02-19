@@ -48,7 +48,7 @@
 
 static void
 add_a68_standenv (bool portable, int a, NODE_T* n, char *c, MOID_T *m,
-		  int p, LOWERER_T l = NO_LOWERER)
+		  int p, LOWERER_T l = LOWERER_UNIMPL)
 {
 #define INSERT_TAG(l, n) \
   do {			 \
@@ -119,7 +119,7 @@ a68_proc (MOID_T *m, ...)
 /* Enter an identifier in standenv.  */
 
 static void
-a68_idf (bool portable, const char *n, MOID_T *m, LOWERER_T l = NO_LOWERER)
+a68_idf (bool portable, const char *n, MOID_T *m, LOWERER_T l = LOWERER_UNIMPL)
 {
   add_a68_standenv (portable, IDENTIFIER,
 		    a68_some_node (TEXT (a68_add_token (&A68 (top_token), n))),
@@ -144,13 +144,13 @@ a68_prio (const char *p, int b)
 {
   add_a68_standenv (true, PRIO_SYMBOL,
 		    a68_some_node (TEXT (a68_add_token (&A68 (top_token), p))),
-		    NO_TEXT, NO_MOID, b, NO_LOWERER);
+		    NO_TEXT, NO_MOID, b, LOWERER_UNIMPL);
 }
 
 /* Enter operator in standenv.  */
 
 static void
-a68_op (bool portable, const char *n, MOID_T *m, LOWERER_T l = NO_LOWERER)
+a68_op (bool portable, const char *n, MOID_T *m, LOWERER_T l = LOWERER_UNIMPL)
 {
   add_a68_standenv (portable, OP_SYMBOL,
 		    a68_some_node (TEXT (a68_add_token (&A68 (top_token), n))),
