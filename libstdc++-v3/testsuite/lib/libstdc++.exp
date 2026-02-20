@@ -478,18 +478,18 @@ if { [info procs saved-dg-test] == [list] } {
 set v3_default_std 20
 set v3_max_std 26
 
-# Find the minimum standard required by a test, if higher than the default_std.
-proc v3-minimum-std { test default_std max_std } {
+# Find the minimum standard required by a test, if higher than $v3_default_std.
+proc v3-minimum-std { test } {
     global v3_default_std
     global v3_max_std
-    for {set s $default_std} {$s <= $v3_max_std} {incr s 3} {
+    for {set s $v3_default_std} {$s <= $v3_max_std} {incr s 3} {
 	if [search_for $test "\{ dg-do * \{ target c++$s"] {
 	    return $s
 	} elseif [search_for $test "\{ dg-require-effective-target c++$s"] {
 	    return $s
 	}
     }
-    return $default_std
+    return $v3_default_std
 }
 
 # Allow v3_std_list to be set in configuration files, e.g., ~/.dejagnurc
