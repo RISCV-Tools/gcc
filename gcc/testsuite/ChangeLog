@@ -1,3 +1,144 @@
+2026-02-19  Jeff Law  <jeffrey.law@oss.qualcomm.com>
+
+	* gcc.dg/torture/pr124108.c: Fix typo.
+
+2026-02-19  jlaw  <jeffreyalaw@gmail.com>
+
+	PR tree-optimization/124108
+	* gcc.dg/torture/pr124108.c: New test.
+
+2026-02-19  Thomas Schwinge  <tschwinge@baylibre.com>
+
+	* lib/target-supports.exp
+	(check_effective_target_no_fsanitize_address): Check 'assembly'
+	instead of 'executable'.
+
+2026-02-19  Thomas Schwinge  <tschwinge@baylibre.com>
+
+	PR rtl-optimization/116053
+	* gcc.dg/pr116053-1.c: 'dg-require-effective-target int128'.
+
+2026-02-19  Avinash Jayakar  <avinashd@linux.ibm.com>
+
+	PR target/123195
+	* gcc.dg/vect/pr104116-ceil-div-2.c: Add space.
+	* gcc.dg/vect/pr104116-ceil-div-pow2.c: Likewise.
+	* gcc.dg/vect/pr104116-ceil-div.c: Likewise.
+	* gcc.dg/vect/pr104116-ceil-mod-2.c: Likewise.
+	* gcc.dg/vect/pr104116-ceil-mod-pow2.c: Likewise.
+	* gcc.dg/vect/pr104116-ceil-mod.c: Likewise.
+	* gcc.dg/vect/pr104116-ceil-udiv-2.c: Likewise.
+	* gcc.dg/vect/pr104116-ceil-udiv-pow2.c: Likewise.
+	* gcc.dg/vect/pr104116-ceil-udiv.c: Likewise.
+	* gcc.dg/vect/pr104116-ceil-umod-2.c: Likewise.
+	* gcc.dg/vect/pr104116-ceil-umod-pow2.c: Likewise.
+	* gcc.dg/vect/pr104116-ceil-umod.c: Likewise.
+	* gcc.dg/vect/pr104116-floor-div-2.c: Likewise.
+	* gcc.dg/vect/pr104116-floor-div-pow2.c: Likewise.
+	* gcc.dg/vect/pr104116-floor-div.c: Likewise.
+	* gcc.dg/vect/pr104116-floor-mod-2.c: Likewise.
+	* gcc.dg/vect/pr104116-floor-mod-pow2.c: Likewise.
+	* gcc.dg/vect/pr104116-floor-mod.c: Likewise.
+	* gcc.dg/vect/pr104116-round-div-2.c: Likewise.
+	* gcc.dg/vect/pr104116-round-div-pow2.c: Likewise.
+	* gcc.dg/vect/pr104116-round-div.c: Likewise.
+	* gcc.dg/vect/pr104116-round-mod-2.c: Likewise.
+	* gcc.dg/vect/pr104116-round-mod-pow2.c: Likewise.
+	* gcc.dg/vect/pr104116-round-mod.c: Likewise.
+	* gcc.dg/vect/pr104116-round-udiv-2.c: Likewise.
+	* gcc.dg/vect/pr104116-round-udiv-pow2.c: Likewise.
+	* gcc.dg/vect/pr104116-round-udiv.c: Likewise.
+	* gcc.dg/vect/pr104116-round-umod-2.c: Likewise.
+	* gcc.dg/vect/pr104116-round-umod-pow2.c: Likewise.
+	* gcc.dg/vect/pr104116-round-umod.c: Likewise.
+
+2026-02-19  Jakub Jelinek  <jakub@redhat.com>
+
+	PR c++/124070
+	* g++.dg/cpp26/pr124070.C: New test.
+	* g++.dg/reflect/parameters_of4.C: Expect different diagnostics.
+	* g++.dg/reflect/define_aggregate7.C: New test.
+	* g++.dg/reflect/define_aggregate8.C: New test.
+
+2026-02-19  Jakub Jelinek  <jakub@redhat.com>
+
+	* g++.dg/cpp26/expansion-stmt29.C: New test.
+	* g++.dg/cpp26/expansion-stmt30.C: New test.
+
+2026-02-19  David Malcolm  <dmalcolm@redhat.com>
+
+	PR analyzer/108400
+	PR analyzer/124116
+	* c-c++-common/analyzer/null-deref-pr108400-SoftEtherVPN-WebUi.c:
+	Remove xfails; these false positives appears to have been fixed by
+	r16-7365-g498fb8a24516b1.
+
+2026-02-19  H.J. Lu  <hjl.tools@gmail.com>
+
+	PR target/120233
+	* gcc.target/i386/pr108938-3.c: Also scan 3 bswaps for x86-64.
+
+2026-02-18  Marek Polacek  <polacek@redhat.com>
+
+	PR c++/123440
+	* g++.dg/reflect/extract10.C: New test.
+
+2026-02-18  Andrew Pinski  <andrew.pinski@oss.qualcomm.com>
+
+	PR rtl-optimization/116053
+	* gcc.dg/pr116053-1.c: New test.
+
+2026-02-18  Vladimir N. Makarov  <vmakarov@redhat.com>
+
+	PR rtl-optimization/120169
+	* gcc.target/m68k/pr120169.c: New.
+
+2026-02-18  Jakub Jelinek  <jakub@redhat.com>
+
+	PR c/123365
+	* gcc.c-torture/compile/pr123365.c: New test.
+
+2026-02-18  Torbjörn SVENSSON  <torbjorn.svensson@foss.st.com>
+
+	* gcc.target/arm/aes-fuse-1.c: Use effective-target
+	arm_cpu_cortex_a53.
+	* gcc.target/arm/aes-fuse-2.c: Likewise.
+	* lib/target-supports.exp: Define effective-target
+	arm_cpu_cortex_a53.
+
+2026-02-18  Richard Biener  <rguenther@suse.de>
+
+	PR target/123137
+	* g++.dg/torture/pr124137.C: New testcase.
+
+2026-02-18  Marek Polacek  <polacek@redhat.com>
+
+	PR c++/124096
+	* g++.dg/reflect/bit_cast.C: New test.
+
+2026-02-18  Victor Do Nascimento  <victor.donascimento@arm.com>
+
+	* gcc.dg/vect/vect-fncall-mask-math.c: Fix test.
+
+2026-02-18  Jakub Jelinek  <jakub@redhat.com>
+
+	PR target/124138
+	* gcc.dg/pr124138.c: New test.
+	* gcc.target/i386/avx512f-pr124138-1.c: New test.
+	* gcc.target/i386/avx512f-pr124138-2.c: New test.
+
+2026-02-18  Tobias Burnus  <tburnus@baylibre.com>
+
+	* gfortran.dg/gomp/groupprivate-1.f90: Update test.
+	* gfortran.dg/gomp/groupprivate-4.f90: Likewise.
+	* gfortran.dg/gomp/groupprivate-6.f90: Likewise.
+	* gfortran.dg/gomp/groupprivate-7.f90: Extend test.
+
+2026-02-18  H.J. Lu  <hjl.tools@gmail.com>
+
+	PR target/124098
+	* gcc.target/i386/pr124098.c: New test.
+
 2026-02-17  H.J. Lu  <hjl.tools@gmail.com>
 
 	PR target/124136

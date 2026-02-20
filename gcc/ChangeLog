@@ -1,3 +1,52 @@
+2026-02-19  jlaw  <jeffreyalaw@gmail.com>
+
+	PR tree-optimization/124108
+	* match.pd (reassociating XOR to expose rotations): Check
+	type_has_mode_precision_p before simplifying.
+
+2026-02-19  Jakub Jelinek  <jakub@redhat.com>
+
+	* config/i386/i386.cc (avx_vpermilp_parallel): Use IN_RANGE
+	macro.
+
+2026-02-19  Pan Li  <pan2.li@intel.com>
+
+	* config/riscv/autovec-opt.md (*literal_v<ieee_fmaxmin_op>_vf_<mode>):
+	Add new pattern for vfmax/min combine to fx.
+
+2026-02-18  Andrew Pinski  <andrew.pinski@oss.qualcomm.com>
+
+	PR rtl-optimization/116053
+	* regcprop.cc (copyprop_hardreg_forward_1): Use delete_insn_and_edges
+	instead of delete_insn.
+
+2026-02-18  Vladimir N. Makarov  <vmakarov@redhat.com>
+
+	PR rtl-optimization/120169
+	* lra-int.h (lra_process_new_insns): Modify the prototype.
+	* lra.cc (lra_process_new_insns): Add arg fixup_reg_args_size with
+	implicit value.  Move REG_ARGS_SIZE note if necessary.
+	* lra-constraints.cc (curr_insn_transform): Pass the new arg value.
+
+2026-02-18  Richard Biener  <rguenther@suse.de>
+
+	PR target/123137
+	* config/i386/i386-features.cc (ix86_emit_tls_call): Improve
+	local FLAGS_REG liveness calculation.
+
+2026-02-18  Jakub Jelinek  <jakub@redhat.com>
+
+	PR target/124138
+	* config/i386/i386.cc (avx_vpermilp_parallel): Verify
+	ipar[2] and ipar[3] aren't larger than 3.
+
+2026-02-18  H.J. Lu  <hjl.tools@gmail.com>
+
+	PR target/124098
+	* config/i386/i386.cc (ix86_access_stack_p): New.
+	(ix86_find_max_used_stack_alignment): Update stack alignment only
+	if stack is used.
+
 2026-02-17  H.J. Lu  <hjl.tools@gmail.com>
 
 	PR target/124136
