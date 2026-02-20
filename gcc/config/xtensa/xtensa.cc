@@ -6028,7 +6028,7 @@ constantsynth_pass1 (rtx_insn *insn, constantsynth_info &info)
      constant.  */
   if (GET_CODE (pat = PATTERN (insn)) != SET
       || ! REG_P (dest = SET_DEST (pat)) || ! GP_REG_P (REGNO (dest))
-      || GET_MODE (dest) != SImode
+      || GET_MODE (dest) != SImode || rtx_equal_p (dest, stack_pointer_rtx)
       || ! CONST_INT_P (src = avoid_constant_pool_reference (SET_SRC (pat))))
     return false;
 
