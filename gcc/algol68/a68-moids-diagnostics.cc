@@ -78,7 +78,7 @@ a68_mode_error_text (NODE_T *n, MOID_T *p, MOID_T *q, int context, int deflex, i
 			      N++;
 			      len = strlen (txt);
 			    }
-			  if (snprintf (TAIL (txt), ACTUAL_SNPRINTF_SIZE, "%<%s%>",
+			  if (snprintf (TAIL (txt), ACTUAL_SNPRINTF_SIZE, "%%<%s%%>",
 					a68_moid_to_string (MOID (u), MOID_ERROR_WIDTH, n)) < 0)
 			    gcc_unreachable ();
 			  N++;
@@ -96,7 +96,7 @@ a68_mode_error_text (NODE_T *n, MOID_T *p, MOID_T *q, int context, int deflex, i
 		gcc_unreachable ();
 	      len = strlen (txt);
 	    }
-	  if (snprintf (TAIL (txt), ACTUAL_SNPRINTF_SIZE, " cannot be coerced to %<%s%>",
+	  if (snprintf (TAIL (txt), ACTUAL_SNPRINTF_SIZE, " cannot be coerced to %%<%s%%>",
 			a68_moid_to_string (q, MOID_ERROR_WIDTH, n)) < 0)
 	    gcc_unreachable ();
 	}
@@ -137,7 +137,7 @@ a68_mode_error_text (NODE_T *n, MOID_T *p, MOID_T *q, int context, int deflex, i
 		}
 	    }
 	  len = strlen (txt);
-	  if (snprintf (TAIL (txt), ACTUAL_SNPRINTF_SIZE, " cannot be coerced to %<%s%>",
+	  if (snprintf (TAIL (txt), ACTUAL_SNPRINTF_SIZE, " cannot be coerced to %%<%s%%>",
 			a68_moid_to_string (SLICE (SUB (q)), MOID_ERROR_WIDTH, n)) < 0)
 	    gcc_unreachable ();
 	}
@@ -171,7 +171,7 @@ a68_mode_error_text (NODE_T *n, MOID_T *p, MOID_T *q, int context, int deflex, i
 			    gcc_unreachable ();
 			  len = strlen (txt);
 			}
-		      if (snprintf (TAIL (txt), ACTUAL_SNPRINTF_SIZE, "%<%s%>",
+		      if (snprintf (TAIL (txt), ACTUAL_SNPRINTF_SIZE, "%%<%s%%>",
 				    a68_moid_to_string (MOID (u), MOID_ERROR_WIDTH, n)) < 0)
 			gcc_unreachable ();
 		    }
@@ -212,7 +212,7 @@ a68_mode_error_text (NODE_T *n, MOID_T *p, MOID_T *q, int context, int deflex, i
 			    gcc_unreachable ();
 			  len = strlen (txt);
 			}
-		      if (snprintf (TAIL (txt), ACTUAL_SNPRINTF_SIZE, "%<%s%> cannot be coerced to %<%s%>",
+		      if (snprintf (TAIL (txt), ACTUAL_SNPRINTF_SIZE, "%%<%s%%> cannot be coerced to %%<%s%%>",
 				    a68_moid_to_string (MOID (u), MOID_ERROR_WIDTH, n),
 				    a68_moid_to_string (MOID (v), MOID_ERROR_WIDTH, n)) < 0)
 			gcc_unreachable ();
