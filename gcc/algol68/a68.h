@@ -798,7 +798,7 @@ tree a68_make_variable_declaration_decl (NODE_T *identifier, const char *module_
 tree a68_make_proc_identity_declaration_decl (NODE_T *identifier, const char *module_name = NULL,
 					      bool indicant = false, bool external = false,
 					      const char *extern_symbol = NULL);
-tree a68_make_formal_hole_decl (NODE_T *p, const char *extern_symbol);
+tree a68_make_formal_hole_decl (NODE_T *p, const char *extern_symbol, bool addrp);
 tree a68_make_anonymous_routine_decl (MOID_T *mode);
 tree a68_get_skip_tree (MOID_T *m);
 tree a68_get_empty (void);

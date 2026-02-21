@@ -634,29 +634,32 @@ a68_make_variable_declaration_decl (NODE_T *identifier,
 
 /* Make an extern declaration for a formal hole.
 
+   If ADDRP is true then it is the address of the external symbol we are
+   interested in.  In that case the mode of P shall be a ref.
+   
    Note that this function is not used for formal holes with proc modes, called
    from a68_wrap_formal_var_hole.  See a68_wrap_formal_proc_hole.  */
 
 tree
-a68_make_formal_hole_decl (NODE_T *p, const char *extern_symbol)
+a68_make_formal_hole_decl (NODE_T *p, const char *extern_symbol,
+			   bool addrp)
 {
   gcc_assert (!IS (MOID (p), PROC_SYMBOL));
 
   tree type = CTYPE (MOID (p));
-  const char *sym = (strlen (extern_symbol) > 0 && extern_symbol[0] == '&'
-		     ? extern_symbol + 1
-		     : extern_symbol);
-
   tree decl = build_decl (a68_get_node_location (p),
 			  VAR_DECL,
-			  get_identifier (sym),
+			  get_identifier (extern_symbol),
 			  type);
   DECL_EXTERNAL (decl) = 1;
   TREE_PUBLIC (decl) = 1;
   DECL_INITIAL (decl) = a68_get_skip_tree (MOID (p));
 
-  if (extern_symbol[0] == '&')
-    decl = fold_build1 (ADDR_EXPR, type, decl);
+  if (addrp)
+    {
+      gcc_assert (IS_REF (MOID (p)));
+      decl = fold_build1 (ADDR_EXPR, type, decl);
+    }
   return decl;
 }
 

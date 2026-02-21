@@ -75,8 +75,9 @@ tree
 a68_wrap_formal_var_hole (NODE_T *p)
 {
   gcc_assert (!IS (MOID (p), PROC_SYMBOL));
-  const char *symbol = get_hole_symbol (p, NULL /* addrp */);
-  return a68_make_formal_hole_decl (p, symbol);
+  bool addrp;
+  const char *symbol = get_hole_symbol (p, &addrp);
+  return a68_make_formal_hole_decl (p, symbol, addrp);
 }
 
 /* Build the body for a wrapper to the formal hole in P, which is of a proc
