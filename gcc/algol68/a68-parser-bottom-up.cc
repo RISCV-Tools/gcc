@@ -1875,7 +1875,7 @@ reduce_formal_holes (NODE_T *p)
 		       && IS (SUB (SUB (SUB (s))), DENOTATION)
 		       && IS (SUB (SUB (SUB (SUB (s)))), ROW_CHAR_DENOTATION)))
 		{
-		  a68_error (s, "expected row char denotation");
+		  a68_error (s, "expected %<row char%> denotation");
 		}
 	    }
 	}

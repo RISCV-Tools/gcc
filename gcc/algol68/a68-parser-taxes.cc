@@ -589,23 +589,25 @@ test_firmly_related_ops_local (NODE_T *p, TAG_T *s)
 			  && warn_algol68_hidden_declarations > 0)
 			{
 			  if (a68_warning (p, OPT_Whidden_declarations_,
-					   "Z hides a firmly related operator in a larger reach",
+					   "%qs hides a firmly related operator in a larger reach",
 					   NSYMBOL (NODE (s))))
 			    {
+			      a68_moid_format_token m (MOID (t));
 			      a68_inform (NO_NODE,
-					  "operator M Z defined in the standard prelude",
-					  MOID (t), NSYMBOL (NODE (t)));
+					  "operator %e %qs defined in the standard prelude",
+					  &m, NSYMBOL (NODE (t)));
 			    }
 			}
 		      else if (warn_algol68_hidden_declarations > 1)
 			{
 			  if (a68_warning (p, OPT_Whidden_declarations_,
-					   "Z hides a firmly related operator in a larger reach",
+					   "%qs hides a firmly related operator in a larger reach",
 					   NSYMBOL (NODE (s))))
 			    {
+			      a68_symbol_format_token s1 (NODE (s));
 			      a68_inform (NODE (t),
-					  "previous hidden declaration of S declared here",
-					  NSYMBOL (NODE (s)));
+					  "previous hidden declaration of %e declared here",
+					  &s1);
 			    }
 			}
 
@@ -681,16 +683,19 @@ already_declared_hidden (NODE_T *n, int a)
 	  || (TAG_TABLE (s) != A68_STANDENV && warn_algol68_hidden_declarations > 1)))
     {
       if (a68_warning (n, OPT_Whidden_declarations_,
-		       "Z hides a declaration with larger reach",
+		       "%qs hides a declaration with larger reach",
 		       NSYMBOL (n)))
 	{
 	  if (TAG_TABLE (s) == A68_STANDENV)
-	    a68_inform (NO_NODE,
-			"M Z defined in the standard prelude",
-			MOID (s), NSYMBOL (NODE (s)));
+	    {
+	      a68_moid_format_token m (MOID (s));
+	      a68_inform (NO_NODE,
+			  "%e %qs defined in the standard prelude",
+			  &m, NSYMBOL (NODE (s)));
+	    }
 	  else
 	    a68_inform (NODE (s),
-			"previous hidden declaration of S declared here",
+			"previous hidden declaration of %qs declared here",
 			NSYMBOL (n));
 	}
     }
