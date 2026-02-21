@@ -270,13 +270,13 @@ MOID_T *a68_type_moid (tree type);
 
 /* a68-diagnostics.cc  */
 
-void a68_error (NODE_T *p, const char *loc_str, ...);
+void a68_error (NODE_T *p, const char *loc_str, ...) ATTRIBUTE_A68_DIAG(2,3);
 void a68_error_in_pragmat (NODE_T *p, size_t off,
-			   const char *loc_str, ...);
-bool a68_warning (NODE_T *p, int opt, const char *loc_str, ...);
-void a68_inform (NODE_T *p, const char *loc_str, ...);
-void a68_fatal (NODE_T *p, const char *loc_str, ...);
-void a68_scan_error (LINE_T *u, char *v, const char *txt, ...);
+			   const char *loc_str, ...) ATTRIBUTE_A68_DIAG(3,4);
+bool a68_warning (NODE_T *p, int opt, const char *loc_str, ...)  ATTRIBUTE_A68_DIAG(3,4);
+void a68_inform (NODE_T *p, const char *loc_str, ...)  ATTRIBUTE_A68_DIAG(2,3);
+void a68_fatal (NODE_T *p, const char *loc_str, ...)  ATTRIBUTE_A68_DIAG(2,3);
+void a68_scan_error (LINE_T *u, char *v, const char *txt, ...)  ATTRIBUTE_A68_DIAG(3,4);
 
 /* a68-parser-scanner.cc  */
 

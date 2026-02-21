@@ -243,9 +243,9 @@ a68_find_object_export_data (const std::string& filename,
   if (errmsg != NULL)
     {
       if (err == 0)
-	a68_error (NO_NODE, "Z: Z", filename.c_str (), errmsg);
+	a68_error (NO_NODE, "%s: %s", filename.c_str (), errmsg);
       else
-	a68_error (NO_NODE, "Z: Z: Z", filename.c_str(), errmsg,
+	a68_error (NO_NODE, "%s: %s: %s", filename.c_str(), errmsg,
 		   xstrerror(err));
       return NULL;
     }
@@ -266,7 +266,7 @@ a68_find_export_data (const std::string &filename, int fd, size_t *psize)
 
   if (lseek (fd, 0, SEEK_SET) < 0)
     {
-      a68_error (NO_NODE, "lseek Z failed", filename.c_str ());
+      a68_error (NO_NODE, "lseek %qs failed", filename.c_str ());
       return NULL;
     }
 
@@ -277,7 +277,7 @@ a68_find_export_data (const std::string &filename, int fd, size_t *psize)
 
   if (lseek (fd, 0, SEEK_SET) < 0)
     {
-      a68_error (NO_NODE, "lseek Z failed", filename.c_str ());
+      a68_error (NO_NODE, "lseek %qs failed", filename.c_str ());
       return NULL;
     }
 
@@ -292,7 +292,7 @@ a68_find_export_data (const std::string &filename, int fd, size_t *psize)
       len = a68_file_size (fd);
       if (len == -1)
         {
-          a68_error (NO_NODE, "a68_file_size failed for Z",
+          a68_error (NO_NODE, "%<a68_file_size%> failed for %qs",
                      filename.c_str ());
           return NULL;
         }
@@ -330,14 +330,14 @@ a68_find_export_data (const std::string &filename, int fd, size_t *psize)
 
     if (lseek (fd, 0, SEEK_SET) < 0)
       {
-	a68_error (NO_NODE, "lseek Z failed", filename.c_str ());
+	a68_error (NO_NODE, "lseek %qs failed", filename.c_str ());
 	return NULL;
       }
 
     c = read (fd, buf, 8);
     if (c < 8)
       {
-	a68_error (NO_NODE, "read Z failed", filename.c_str ());
+	a68_error (NO_NODE, "read %qs failed", filename.c_str ());
 	return NULL;
       }
 
@@ -409,7 +409,7 @@ a68_try_packet_in_directory (const std::string &filename, size_t *psize)
 
   close (fd);
 
-  a68_error (NO_NODE, "file Z exists but does not contain any export data",
+  a68_error (NO_NODE, "file %qs exists but does not contain any export data",
 	     found_filename.c_str ());
 
   return NULL;
@@ -1429,7 +1429,7 @@ a68_open_packet (const char *module, const char *basename)
       const char *errstr = NULL;
       if (!a68_decode_moifs (exports_data, exports_data_size, &errstr))
 	{
-	  a68_error (NO_NODE, "Y", errstr);
+	  a68_error (NO_NODE, "%s", errstr);
 	  return NULL;
 	}
 

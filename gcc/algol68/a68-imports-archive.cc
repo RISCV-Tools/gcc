@@ -254,7 +254,7 @@ Archive_file::initialize()
   struct stat st;
   if (fstat(this->fd_, &st) < 0)
     {
-      a68_error (NO_NODE, "Z: doing stat", this->filename_.c_str());
+      a68_error (NO_NODE, "%s: doing stat", this->filename_.c_str());
       return false;
     }
   this->filesize_ = st.st_size;
@@ -263,7 +263,7 @@ Archive_file::initialize()
   if (::lseek(this->fd_, 0, SEEK_SET) < 0
       || ::read(this->fd_, buf, sizeof(armagt)) != sizeof(armagt))
     {
-      a68_error (NO_NODE, "Z: reading from archive", this->filename_.c_str());
+      a68_error (NO_NODE, "%s: reading from archive", this->filename_.c_str());
       return false;
     }
   if (memcmp(buf, armagt, sizeof(armagt)) == 0)
@@ -288,7 +288,7 @@ Archive_file::initialize_big_archive()
   if (::lseek(this->fd_, 0, SEEK_SET) < 0
       || ::read(this->fd_, &flhdr, sizeof(flhdr)) != sizeof(flhdr))
     {
-      a68_error (NO_NODE, "Z: could not read archive header",
+      a68_error (NO_NODE, "%s: could not read archive header",
                   this->filename_.c_str());
       return false;
     }
@@ -300,7 +300,7 @@ Archive_file::initialize_big_archive()
       char* buf = new char[sizeof(flhdr.fl_fstmoff) + 1];
       memcpy(buf, flhdr.fl_fstmoff, sizeof(flhdr.fl_fstmoff));
       a68_error (NO_NODE,
-		 ("Z: malformed first member offset in archive header"
+		 ("%s: malformed first member offset in archive header"
                    " (expected decimal, got Z)"),
                   this->filename_.c_str(), buf);
       delete[] buf;
@@ -343,7 +343,7 @@ Archive_file::initialize_archive()
       char* rdbuf = new char[size];
       if (::read(this->fd_, rdbuf, size) != size)
 	{
-	  a68_error (NO_NODE, "Z: could not read extended names",
+	  a68_error (NO_NODE, "%s: could not read extended names",
 		     filename.c_str());
 	  delete[] rdbuf;
 	  return false;
@@ -363,7 +363,7 @@ Archive_file::read(off_t offset, off_t size, char* buf)
   if (::lseek(this->fd_, offset, SEEK_SET) < 0
       || ::read(this->fd_, buf, size) != size)
     {
-      a68_error (NO_NODE, "Z: reading from archive", this->filename_.c_str());
+      a68_error (NO_NODE, "%s: reading from archive", this->filename_.c_str());
       return false;
     }
   return true;
@@ -404,7 +404,7 @@ Archive_file::read_header(off_t off, std::string* pname, off_t* size,
 {
   if (::lseek(this->fd_, off, SEEK_SET) < 0)
     {
-      a68_error (NO_NODE, "Z: seeking in archive", this->filename_.c_str());
+      a68_error (NO_NODE, "%s: seeking in archive", this->filename_.c_str());
       return false;
     }
   if (this->is_big_archive_)
@@ -426,12 +426,12 @@ Archive_file::read_big_archive_header(off_t off, std::string* pname,
   if (got != sizeof hdr)
     {
       if (got < 0)
-        a68_error (NO_NODE, "Z: reading from archive", this->filename_.c_str());
+        a68_error (NO_NODE, "%s: reading from archive", this->filename_.c_str());
       else if (got > 0)
-        a68_error (NO_NODE, "Z short entry header at L",
+        a68_error (NO_NODE, "%qs short entry header at %ld",
                     this->filename_.c_str(), static_cast<long>(off));
       else
-        a68_error (NO_NODE, "Z: unexpected EOF at L",
+        a68_error (NO_NODE, "%s: unexpected EOF at %ld",
 		   this->filename_.c_str(), static_cast<long>(off));
     }
 
@@ -441,7 +441,7 @@ Archive_file::read_big_archive_header(off_t off, std::string* pname,
       char* buf = new char[sizeof(hdr.ar_size) + 1];
       memcpy(buf, hdr.ar_size, sizeof(hdr.ar_size));
       a68_error (NO_NODE,
-                  ("Z: malformed size in entry header at L"
+                  ("%s: malformed size in entry header at %ld"
                    " (expected decimal, got %s)"),
 		 this->filename_.c_str(), static_cast<long>(off), buf);
       delete[] buf;
@@ -455,7 +455,7 @@ Archive_file::read_big_archive_header(off_t off, std::string* pname,
       char* buf = new char[sizeof(hdr.ar_namlen) + 1];
       memcpy(buf, hdr.ar_namlen, sizeof(hdr.ar_namlen));
       a68_error (NO_NODE,
-                  ("Z: malformed name length in entry header at L"
+                  ("%s: malformed name length in entry header at %ld"
                    " (expected decimal, got %s)"),
                   this->filename_.c_str(), static_cast<long>(off), buf);
       delete[] buf;
@@ -467,7 +467,7 @@ Archive_file::read_big_archive_header(off_t off, std::string* pname,
   if (got != namlen)
     {
       a68_error (NO_NODE,
-		 "Z: malformed member name in entry header at L",
+		 "%s: malformed member name in entry header at %ld",
 		 this->filename_.c_str(), static_cast<long>(off));
       delete[] rdbuf;
       return false;
@@ -481,7 +481,7 @@ Archive_file::read_big_archive_header(off_t off, std::string* pname,
       char* buf = new char[sizeof(hdr.ar_nxtmem) + 1];
       memcpy(buf, hdr.ar_nxtmem, sizeof(hdr.ar_nxtmem));
       a68_error (NO_NODE,
-		 ("Z: malformed next member offset in entry header at L"
+		 ("%s: malformed next member offset in entry header at %ld"
 		  " (expected decimal, got %s)"),
 		 this->filename_.c_str(), static_cast<long>(off), buf);
       delete[] buf;
@@ -509,12 +509,12 @@ Archive_file::read_archive_header(off_t off, std::string* pname, off_t* size,
   if (got != sizeof hdr)
     {
       if (got < 0)
-	a68_error (NO_NODE, "Z: reading from archive", this->filename_.c_str());
+	a68_error (NO_NODE, "%s: reading from archive", this->filename_.c_str());
       else if (got > 0)
-	a68_error (NO_NODE, "Z: short archive header at L",
+	a68_error (NO_NODE, "%s: short archive header at %ld",
 		   this->filename_.c_str(), static_cast<long>(off));
       else
-	a68_error (NO_NODE, "Z: unexpected EOF at L",
+	a68_error (NO_NODE, "%s: unexpected EOF at %ld",
 		   this->filename_.c_str(), static_cast<long>(off));
     }
   off_t local_nested_off;
@@ -546,7 +546,7 @@ Archive_file::interpret_header(const Archive_header* hdr, off_t off,
 {
   if (memcmp(hdr->ar_fmag, arfmag, sizeof arfmag) != 0)
     {
-      a68_error (NO_NODE, "Z: malformed archive header at L",
+      a68_error (NO_NODE, "%s: malformed archive header at %lu",
 		 this->filename_.c_str(), static_cast<unsigned long>(off));
       return false;
     }
@@ -554,7 +554,7 @@ Archive_file::interpret_header(const Archive_header* hdr, off_t off,
   long local_size;
   if (!this->parse_decimal(hdr->ar_size, sizeof hdr->ar_size, &local_size))
     {
-      a68_error (NO_NODE, "Z: malformed archive header size at L",
+      a68_error (NO_NODE, "%s: malformed archive header size at %lu",
 		 this->filename_.c_str(), static_cast<unsigned long>(off));
       return false;
     }
@@ -568,7 +568,7 @@ Archive_file::interpret_header(const Archive_header* hdr, off_t off,
 	  || name_end - hdr->ar_name >= static_cast<int>(sizeof hdr->ar_name))
 	{
 	  a68_error (NO_NODE,
-		     "Z: malformed archive header name at L",
+		     "%s: malformed archive header name at %lu",
 		     this->filename_.c_str(), static_cast<unsigned long>(off));
 	  return false;
 	}
@@ -606,7 +606,7 @@ Archive_file::interpret_header(const Archive_header* hdr, off_t off,
 	  || (x == LONG_MAX && errno == ERANGE)
 	  || static_cast<size_t>(x) >= this->extended_names_.size())
 	{
-	  a68_error (NO_NODE, "Z: bad extended name index at L",
+	  a68_error (NO_NODE, "%s: bad extended name index at %lu",
 		     this->filename_.c_str(), static_cast<unsigned long>(off));
 	  return false;
 	}
@@ -617,7 +617,7 @@ Archive_file::interpret_header(const Archive_header* hdr, off_t off,
 	  || name_end[-1] != '/')
 	{
 	  a68_error (NO_NODE,
-		     "Z: bad extended name entry at header L",
+		     "%s: bad extended name entry at header %lu",
 		     this->filename_.c_str(), static_cast<unsigned long>(off));
 	  return false;
 	}
@@ -676,7 +676,7 @@ Archive_file::get_file_and_offset(off_t off, const std::string& hdrname,
 	  int nfd = open(filename.c_str(), O_RDONLY | O_BINARY);
 	  if (nfd < 0)
 	    {
-	      a68_error (NO_NODE, "Z: cannot open nested archive Z",
+	      a68_error (NO_NODE, "%s: cannot open nested archive %s",
 			 this->filename_.c_str(), filename.c_str());
 	      return false;
 	    }
@@ -702,7 +702,7 @@ Archive_file::get_file_and_offset(off_t off, const std::string& hdrname,
   *memfd = open(filename.c_str(), O_RDONLY | O_BINARY);
   if (*memfd < 0)
     {
-      a68_error (NO_NODE, "Z: opening archive", filename.c_str());
+      a68_error (NO_NODE, "%s: opening archive", filename.c_str());
       return false;
     }
   *memoff = 0;
