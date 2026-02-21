@@ -301,7 +301,7 @@ Archive_file::initialize_big_archive()
       memcpy(buf, flhdr.fl_fstmoff, sizeof(flhdr.fl_fstmoff));
       a68_error (NO_NODE,
 		 ("%s: malformed first member offset in archive header"
-                   " (expected decimal, got Z)"),
+                   " (expected decimal, got %qs)"),
                   this->filename_.c_str(), buf);
       delete[] buf;
       return false;
