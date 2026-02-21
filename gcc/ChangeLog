@@ -1,3 +1,35 @@
+2026-02-20  Kwok Cheung Yeung  <kcyeung@baylibre.com>
+
+	PR middle-end/113436
+	* omp-low.cc (omp_lower_target):  Do not check for variable-length
+	variables in private clauses by reference when allocating memory.
+
+2026-02-20  Richard Biener  <rguenther@suse.de>
+
+	PR tree-optimization/124068
+	* tree-vect-patterns.cc (target_has_vecop_for_code): Move
+	earlier, add defaulted optab_subtype parameter.
+	(vect_recog_over_widening_pattern): Check that the target
+	supports the narrowed operation before committing to the
+	pattern.
+
+2026-02-20  Martin Jambor  <mjambor@suse.cz>
+
+	PR ipa/122856
+	* ipa-cp.cc (self_recursive_pass_through_p): Test jump function type first.
+	(self_recursive_ancestor_p): New function.
+	(find_scalar_values_for_callers_subset): Test also for self-recursive
+	ancestor jump functions.
+	(push_agg_values_for_index_from_edge): Likewise.
+
+2026-02-20  Andrew Pinski  <andrew.pinski@oss.qualcomm.com>
+
+	PR tree-optimization/121103
+	* gimple-fold.cc (gimple_fold_call): Don't simplify
+	noreturn functions.
+	* tree-ssa-dse.cc (dse_optimize_stmt): Don't handle
+	calls to noreturn functions.
+
 2026-02-19  jlaw  <jeffreyalaw@gmail.com>
 
 	PR tree-optimization/124108

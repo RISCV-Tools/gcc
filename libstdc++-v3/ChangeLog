@@ -1,3 +1,8 @@
+2026-02-20  Jonathan Wakely  <jwakely@redhat.com>
+
+	* testsuite/lib/libstdc++.exp (v3-minimum-std): Remove second
+	and third args in favour of using globals.
+
 2026-02-19  Tomasz Kamiński  <tkaminsk@redhat.com>
 
 	* include/std/type_traits (_CWOperators::operator++)
