@@ -16178,7 +16178,13 @@ cp_convert_range_for (tree statement, tree range_decl, tree range_expr,
 /* Solves BEGIN_EXPR and END_EXPR as described in cp_convert_range_for.
    We need to solve both at the same time because the method used
    depends on the existence of members begin or end.
-   Returns the type deduced for the iterator expression.  */
+   Returns the type deduced for the iterator expression.
+   This function assumes that if COMPLAIN is not tf_warning_or_error,
+   it is tf_none and is called to find out if an expansion statement
+   is iterating (vs. destructruring) and behaves differently in that
+   case, in particular just checks if ADL looked up begin/end has
+   any viable candidates rather than doing full finish_call_expr
+   in that case.  */
 
 tree
 cp_perform_range_for_lookup (tree range, tree *begin, tree *end,
@@ -16243,7 +16249,8 @@ cp_perform_range_for_lookup (tree range, tree *begin, tree *end,
 	  if ((complain & tf_error) == 0 && member_begin == id_begin)
 	    return error_mark_node;
 	  *begin = finish_call_expr (member_begin, &vec, false, true,
-				     complain);
+				     (complain & tf_error) ? complain
+				     : tf_any_viable);
 	  member_end = perform_koenig_lookup (id_end, vec, complain);
 	  if ((complain & tf_error) == 0 && member_end == id_end)
 	    {
@@ -16251,29 +16258,20 @@ cp_perform_range_for_lookup (tree range, tree *begin, tree *end,
 	      return error_mark_node;
 	    }
 	  *end = finish_call_expr (member_end, &vec, false, true,
-				   complain);
-	  if ((complain & tf_error) == 0
-	      && (*begin == error_mark_node || *end == error_mark_node))
+				   (complain & tf_error) ? complain
+				   : tf_any_viable);
+	  if ((complain & tf_error) == 0)
 	    {
-	      /* Expansion stmt should be iterating if there are any
-		 viable candidates for begin and end.  If both finish_call_expr
-		 with tf_none succeeded, there certainly are, if not,
-		 retry with tf_any_viable to check if there were any viable
-		 candidates.  */
-	      if (*begin == error_mark_node
-		  && finish_call_expr (member_begin, &vec, false, true,
-				       tf_any_viable) == error_mark_node)
+	      if (*begin == error_mark_node || *end == error_mark_node)
 		{
-		  *end = error_mark_node;
+		  *begin = *end = error_mark_node;
+		  /* Expansion stmt should be destructuring if no viable
+		     candidate was found.  */
 		  return error_mark_node;
 		}
-	      if (*end == error_mark_node
-		  && finish_call_expr (member_end, &vec, false, true,
-				       tf_any_viable) == error_mark_node)
-		{
-		  *begin = error_mark_node;
-		  return error_mark_node;
-		}
+	      /* Otherwise both are viable, so make sure to return
+		 NULL_TREE and set *begin and *end to error_mark_node.  */
+	      *begin = error_mark_node;
 	    }
 	}
 
