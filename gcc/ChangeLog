@@ -1,3 +1,21 @@
+2026-02-21  Takayuki 'January June' Suwa  <jjsuwa_sys3175@yahoo.co.jp>
+
+	* config/xtensa/xtensa.cc (constantsynth_pass1):
+	Add the case where the assignment destination is a stack pointer
+	to the exclusion criteria for processing.
+
+2026-02-21  Jeff Law  <jeffrey.law@oss.qualcomm.com>
+
+	PR rtl-optimization/123994
+	* rtl-ssa/changes.cc (function_info::verify_insn_changes): Bullet
+	proof loop to not fault if we run off the end of the insn chain.
+
+2026-02-21  Jeff Law  <jeffrey.law@oss.qualcomm.com>
+
+	PR target/124147
+	* config/riscv/riscv.cc (riscv_same_function_versions): Use nullptr_t rather
+	than UNKNOWN_LOCATION for pointer argument.
+
 2026-02-20  Kwok Cheung Yeung  <kcyeung@baylibre.com>
 
 	PR middle-end/113436

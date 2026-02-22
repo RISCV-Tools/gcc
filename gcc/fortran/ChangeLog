@@ -1,3 +1,12 @@
+2026-02-21  Harald Anlauf  <anlauf@gmx.de>
+
+	Revert:
+	2026-02-20  Gonzalo Silvalde Blanco  <gonzalo.silvalde@gmail.com>
+
+	PR fortran/80012
+	* symbol.cc (gfc_add_procedure): Split error into gfc_error and
+	inform using auto_diagnostic_group.
+
 2026-02-20  Gonzalo Silvalde Blanco  <gonzalo.silvalde@gmail.com>
 
 	PR fortran/80012

@@ -1,3 +1,30 @@
+2026-02-21  Jose E. Marchesi  <jemarch@gnu.org>
+
+	* algol68/compile/warning-hidding-4.a68: Mention bitspack.
+
+2026-02-21  Jose E. Marchesi  <jemarch@gnu.org>
+
+	* lib/algol68.exp (algol68_init): Add -I options to
+	ALGOL68_UNDER_TEST so exports in libga68.{a,so} are found.
+	* algol68/compile/warning-hidding-6.a68: Likewise.
+	* algol68/compile/warning-hidding-5.a68: Use maxint instead of
+	getchar to trigger the warning.
+	* algol68/compile/error-nest-4.a68: Procedures yielding strings
+	are now on in C formal holes.
+
+2026-02-21  Jeff Law  <jeffrey.law@oss.qualcomm.com>
+
+	PR rtl-optimization/123994
+	* gcc.dg/torture/pr123994.c: New test.
+
+2026-02-21  Harald Anlauf  <anlauf@gmx.de>
+
+	Revert:
+	2026-02-21  Gonzalo Silvalde Blanco  <gonzalo.silvalde@gmail.com>
+
+	PR fortran/80012
+	* gfortran.dg/pr80012.f90: New test.
+
 2026-02-20  Gonzalo Silvalde Blanco  <gonzalo.silvalde@gmail.com>
 
 	PR fortran/80012
