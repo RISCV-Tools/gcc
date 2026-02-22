@@ -552,21 +552,24 @@ lower_subscript_for_trimmers (NODE_T *p, LOW_CTX_T ctx,
 		  {
 		    /* Lower bound is implicit.  */
 		    FORWARD (q);
-		    if (IS (q, AT_SYMBOL))
+		    if (q != NO_NODE)
 		      {
-			/* Upper bound is implicit, AT specified.  */
-			gcc_assert (IS (q, AT_SYMBOL));
-			at = save_expr (fold_convert (ssizetype, a68_lower_tree (NEXT (q), ctx)));
-		      }
-		    else
-		      {
-			upper_bound
-			  = save_expr (fold_convert (ssizetype, a68_lower_tree (q, ctx)));
-			FORWARD (q);
-			if (q != NO_NODE)
+			if (IS (q, AT_SYMBOL))
 			  {
+			    /* Upper bound is implicit, AT specified.  */
 			    gcc_assert (IS (q, AT_SYMBOL));
 			    at = save_expr (fold_convert (ssizetype, a68_lower_tree (NEXT (q), ctx)));
+			  }
+			else
+			  {
+			    upper_bound
+			      = save_expr (fold_convert (ssizetype, a68_lower_tree (q, ctx)));
+			    FORWARD (q);
+			    if (q != NO_NODE)
+			      {
+				gcc_assert (IS (q, AT_SYMBOL));
+				at = save_expr (fold_convert (ssizetype, a68_lower_tree (NEXT (q), ctx)));
+			      }
 			  }
 		      }
 		  }
